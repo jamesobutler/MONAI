@@ -40,7 +40,8 @@ class TestPNGReader(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2, TEST_CASE_3, TEST_CASE_4, TEST_CASE_5, TEST_CASE_6])
     def test_shape_value(self, data_shape, filenames, expected_shape, meta_shape, reverse=True):
-        test_image = np.random.randint(0, 256, size=data_shape)
+        rng = np.random.default_rng()
+        test_image = rng.integers(0, 256, size=data_shape)
         with tempfile.TemporaryDirectory() as tempdir:
             for i, name in enumerate(filenames):
                 filenames[i] = os.path.join(tempdir, name)
@@ -61,7 +62,8 @@ class TestPNGReader(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_7])
     def test_converter(self, data_shape, filenames, expected_shape, meta_shape):
-        test_image = np.random.randint(0, 256, size=data_shape)
+        rng = np.random.default_rng()
+        test_image = rng.integers(0, 256, size=data_shape)
         with tempfile.TemporaryDirectory() as tempdir:
             for i, name in enumerate(filenames):
                 filenames[i] = os.path.join(tempdir, name)

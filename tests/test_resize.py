@@ -121,7 +121,8 @@ class TestResize(NumpyImageTestCase2D):
     @parameterized.expand([TEST_CASE_0, TEST_CASE_1, TEST_CASE_2, TEST_CASE_2_1, TEST_CASE_3, TEST_CASE_4])
     @SkipIfAtLeastPyTorchVersion((2, 2, 0))  # https://github.com/Project-MONAI/MONAI/issues/7445
     def test_longest_shape(self, input_param, expected_shape):
-        input_data = np.random.randint(0, 2, size=[3, 4, 7, 10])
+        rng = np.random.default_rng()
+        input_data = rng.integers(0, 2, size=[3, 4, 7, 10])
         input_param["size_mode"] = "longest"
         result = Resize(**input_param)(input_data)
         np.testing.assert_allclose(result.shape[1:], expected_shape)
@@ -134,7 +135,8 @@ class TestResize(NumpyImageTestCase2D):
 
     def test_longest_infinite_decimals(self):
         resize = Resize(spatial_size=1008, size_mode="longest", mode="bilinear", align_corners=False)
-        ret = resize(np.random.randint(0, 2, size=[1, 2544, 3032]))
+        rng = np.random.default_rng()
+        ret = resize(rng.integers(0, 2, size=[1, 2544, 3032]))
         self.assertTupleEqual(ret.shape, (1, 846, 1008))
 
 

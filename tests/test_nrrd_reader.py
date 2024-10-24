@@ -58,7 +58,8 @@ class TestNrrdReader(unittest.TestCase):
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2, TEST_CASE_3, TEST_CASE_4])
     def test_read_int(self, data_shape, filename, expected_shape, dtype):
         min_val, max_val = np.iinfo(dtype).min, np.iinfo(dtype).max
-        test_image = np.random.randint(min_val, max_val, size=data_shape, dtype=dtype)
+        rng = np.random.default_rng()
+        test_image = rng.integers(min_val, max_val, size=data_shape, dtype=dtype)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, filename)
             nrrd.write(filename, test_image.astype(dtype))
@@ -71,7 +72,8 @@ class TestNrrdReader(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_5, TEST_CASE_6])
     def test_read_float(self, data_shape, filename, expected_shape, dtype):
-        test_image = np.random.rand(*data_shape).astype(dtype)
+        rng = np.random.default_rng()
+        test_image = rng.random(*data_shape).astype(dtype)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, filename)
             nrrd.write(filename, test_image.astype(dtype))
@@ -84,7 +86,8 @@ class TestNrrdReader(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_7])
     def test_read_list(self, data_shape, filenames, expected_shape, dtype):
-        test_image = np.random.rand(*data_shape).astype(dtype)
+        rng = np.random.default_rng()
+        test_image = rng.random(*data_shape).astype(dtype)
         with tempfile.TemporaryDirectory() as tempdir:
             for i, filename in enumerate(filenames):
                 filenames[i] = os.path.join(tempdir, filename)
@@ -98,7 +101,8 @@ class TestNrrdReader(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_8])
     def test_read_with_header(self, data_shape, filename, expected_shape, dtype, reference_header):
-        test_image = np.random.rand(*data_shape).astype(dtype)
+        rng = np.random.default_rng()
+        test_image = rng.random(*data_shape).astype(dtype)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, filename)
             nrrd.write(filename, test_image.astype(dtype), header=reference_header)
@@ -117,7 +121,8 @@ class TestNrrdReader(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_8])
     def test_read_with_header_index_order_c(self, data_shape, filename, expected_shape, dtype, reference_header):
-        test_image = np.random.rand(*data_shape).astype(dtype)
+        rng = np.random.default_rng()
+        test_image = rng.random(*data_shape).astype(dtype)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, filename)
             nrrd.write(filename, test_image.astype(dtype), header=reference_header)

@@ -54,7 +54,8 @@ class PadTest(unittest.TestCase):
 
     @staticmethod
     def get_arr(shape):
-        return np.random.randint(100, size=shape).astype(float)
+        rng = np.random.default_rng()
+        return rng.integers(100, size=shape).astype(float)
 
     def pad_test(self, input_param, input_shape, expected_shape, modes=None):
         # loop over each mode
@@ -97,7 +98,8 @@ class PadTest(unittest.TestCase):
             with self.subTest(im_type=im_type):
                 for kwargs in ({"value": 2}, {"constant_values": ((0, 0), (1, 1), (2, 2))}):
                     with self.subTest(kwargs=kwargs):
-                        im = im_type(np.random.randint(-100, -10, size=(3, 8, 4)))
+                        rng = np.random.default_rng()
+                        im = im_type(rng.integers(-100, -10, size=(3, 8, 4)))
                         padder = self.Padder(**input_param, **kwargs)
                         result = padder(im)
                         if isinstance(result, torch.Tensor):

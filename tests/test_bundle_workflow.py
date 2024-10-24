@@ -43,7 +43,8 @@ class TestBundleWorkflow(unittest.TestCase):
     def setUp(self):
         self.data_dir = tempfile.mkdtemp()
         self.expected_shape = (128, 128, 128)
-        test_image = np.random.rand(*self.expected_shape)
+        rng = np.random.default_rng()
+        test_image = rng.random(*self.expected_shape)
         self.filename = os.path.join(self.data_dir, "image.nii")
         nib.save(nib.Nifti1Image(test_image, np.eye(4)), self.filename)
 

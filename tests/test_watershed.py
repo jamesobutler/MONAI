@@ -34,8 +34,9 @@ np.random.RandomState(123)
 TESTS = []
 params = {"connectivity": 1}
 for p in TEST_NDARRAYS:
-    image = p(np.random.rand(1, 10, 10))
-    hover_map = p(np.random.rand(2, 10, 10))
+    rng = np.random.default_rng()
+    image = p(rng.random(1, 10, 10))
+    hover_map = p(rng.random(2, 10, 10))
 
     TESTS.append([params, image, hover_map, (1, 10, 10)])
 

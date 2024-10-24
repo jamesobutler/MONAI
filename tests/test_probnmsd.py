@@ -21,12 +21,13 @@ from parameterized import parameterized
 from monai.transforms.post.dictionary import ProbNMSD
 from tests.utils import TEST_NDARRAYS
 
+rng = np.random.default_rng()
 TESTS: list[Any] = []
 for p in TEST_NDARRAYS:
-    probs_map_1 = p(np.random.rand(100, 100).clip(0, 0.5))
+    probs_map_1 = p(rng.random(100, 100).clip(0, 0.5))
     TESTS.append([{"spatial_dims": 2, "prob_threshold": 0.5, "box_size": 10}, {"prob_map": probs_map_1}, []])
 
-    probs_map_2 = p(np.random.rand(100, 100).clip(0, 0.5))
+    probs_map_2 = p(rng.random(100, 100).clip(0, 0.5))
     probs_map_2[33, 33] = 0.7
     probs_map_2[66, 66] = 0.9
     expected_2 = [[0.9, 66, 66], [0.7, 33, 33]]
@@ -34,7 +35,7 @@ for p in TEST_NDARRAYS:
         [{"spatial_dims": 2, "prob_threshold": 0.5, "box_size": [10, 10]}, {"prob_map": probs_map_2}, expected_2]
     )
 
-    probs_map_3 = p(np.random.rand(100, 100).clip(0, 0.5))
+    probs_map_3 = p(rng.random(100, 100).clip(0, 0.5))
     probs_map_3[56, 58] = 0.7
     probs_map_3[60, 66] = 0.8
     probs_map_3[66, 66] = 0.9
@@ -43,16 +44,16 @@ for p in TEST_NDARRAYS:
         [{"spatial_dims": 2, "prob_threshold": 0.5, "box_size": (10, 20)}, {"prob_map": probs_map_3}, expected_3]
     )
 
-    probs_map_4 = p(np.random.rand(100, 100).clip(0, 0.5))
+    probs_map_4 = p(rng.random(100, 100).clip(0, 0.5))
     probs_map_4[33, 33] = 0.7
     probs_map_4[66, 66] = 0.9
     expected_4 = [[0.9, 66, 66]]
     TESTS.append([{"spatial_dims": 2, "prob_threshold": 0.8, "box_size": 10}, {"prob_map": probs_map_4}, expected_4])
 
-    probs_map_5 = p(np.random.rand(100, 100).clip(0, 0.5))
+    probs_map_5 = p(rng.random(100, 100).clip(0, 0.5))
     TESTS.append([{"spatial_dims": 2, "prob_threshold": 0.5, "sigma": 0.1}, {"prob_map": probs_map_5}, []])
 
-    probs_map_6 = p(np.random.rand(100, 100).clip(0, 0.5))
+    probs_map_6 = p(rng.random(100, 100).clip(0, 0.5))
     probs_map_6[33, 33] = 0.7
     probs_map_6[66, 66] = 0.9
     expected_6 = [[0.9, 66, 66], [0.7, 33, 33]]

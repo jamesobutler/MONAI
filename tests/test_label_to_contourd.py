@@ -173,7 +173,8 @@ class TestContourd(unittest.TestCase):
         # check invalid input data
         error_input = {"img": torch.rand(1, 2)}
         self.assertRaises(ValueError, LabelToContourd(**input_param), error_input)
-        error_input = {"img": np.random.rand(1, 2)}
+        rng = np.random.default_rng()
+        error_input = {"img": rng.random(1, 2)}
         self.assertRaises(ValueError, LabelToContourd(**input_param), error_input)
         error_input = {"img": torch.rand(1, 2, 3, 4, 5)}
         self.assertRaises(ValueError, LabelToContourd(**input_param), error_input)

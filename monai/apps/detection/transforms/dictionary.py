@@ -1302,7 +1302,7 @@ class RandRotateBox90d(RandomizableTransform, MapTransform, InvertibleTransform)
         box_ref_image_keys: Keys that represent the reference images to which ``box_keys`` are attached.
         prob: probability of rotating.
             (Default 0.1, with 10% probability it returns a rotated array.)
-        max_k: number of rotations will be sampled from `np.random.randint(max_k) + 1`.
+        max_k: number of rotations will be sampled from `rng.integers(max_k) + 1`.
             (Default 3)
         spatial_axes: 2 int numbers, defines the plane to rotate with 2 spatial axes.
             Default: (0, 1), this is the first two axis in spatial dimensions.

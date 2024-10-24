@@ -43,11 +43,12 @@ class TestInteractions(unittest.TestCase):
 
     def run_interaction(self, train):
         label_names = {"spleen": 1, "background": 0}
-        np.random.seed(0)
+        np.random.default_rng(0)
+        rng = np.random.default_rng()
         data = [
             {
-                "image": np.random.randint(0, 256, size=(1, 15, 15, 15)).astype(np.float32),
-                "label": np.random.randint(0, 2, size=(1, 15, 15, 15)),
+                "image": rng.integers(0, 256, size=(1, 15, 15, 15)).astype(np.float32),
+                "label": rng.integers(0, 2, size=(1, 15, 15, 15)),
                 "label_names": label_names,
             }
             for _ in range(5)

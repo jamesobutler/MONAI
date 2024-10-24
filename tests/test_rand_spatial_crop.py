@@ -77,7 +77,8 @@ class TestRandSpatialCrop(CropTest):
             with self.subTest(im_type=im_type):
                 cropper = RandSpatialCrop(**input_param)
                 cropper.set_random_state(seed=123)
-                input_data = im_type(np.random.randint(0, 2, input_shape))
+                rng = np.random.default_rng()
+                input_data = im_type(rng.integers(0, 2, input_shape))
                 expected = cropper(input_data)
                 self.assertTupleEqual(expected.shape, expected_shape)
 

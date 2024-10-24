@@ -169,7 +169,8 @@ def load_img_and_sample_ddf():
 
     # randomly sample ddf such that maximum displacement in each direction equals to one-tenth of the image dimension in
     # that direction.
-    ddf = np.random.random((3, *img.shape)).astype(np.float32)  # (3, D, H, W)
+    rng = np.random.default_rng()
+    ddf = rng.random((3, *img.shape)).astype(np.float32)  # (3, D, H, W)
     ddf[0] = ddf[0] * img.shape[0] * 0.1
     ddf[1] = ddf[1] * img.shape[1] * 0.1
     ddf[2] = ddf[2] * img.shape[2] * 0.1

@@ -28,12 +28,13 @@ class TestRandScaleIntensity(NumpyImageTestCase2D):
         scaler.set_random_state(seed=0)
         im = p(self.imt)
         result = scaler(im)
-        np.random.seed(0)
+        np.random.default_rng(0)
         # simulate the randomize() of transform
-        np.random.random()
+        rng = np.random.default_rng()
+        rng.random()
         mn = im.mean()
         im = im - mn
-        expected = (1 + np.random.uniform(low=-0.5, high=0.5)) * im
+        expected = (1 + rng.uniform(low=-0.5, high=0.5)) * im
         expected = expected + mn
         assert_allclose(result, expected, type_test="tensor", atol=1e-7)
 

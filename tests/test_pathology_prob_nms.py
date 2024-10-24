@@ -19,7 +19,8 @@ from parameterized import parameterized
 
 from monai.apps.pathology.utils import PathologyProbNMS
 
-probs_map_2d = np.random.rand(100, 100).clip(0, 0.5)
+rng = np.random.default_rng()
+probs_map_2d = rng.random(100, 100).clip(0, 0.5)
 probs_map_2d[33, 33] = 0.7
 probs_map_2d[66, 66] = 0.9
 expected_2d = [[0.9, 133, 133], [0.7, 67, 67]]

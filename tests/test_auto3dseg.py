@@ -231,7 +231,8 @@ class TestDataAnalyzer(unittest.TestCase):
 
     def test_basic_operation_class(self):
         op = TestOperations()
-        test_data = np.random.rand(10, 10).astype(np.float64)
+        rng = np.random.default_rng()
+        test_data = rng.random(10, 10).astype(np.float64)
         test_ret_1 = op.evaluate(test_data)
         test_ret_2 = op.evaluate(test_data, axis=0)
         assert isinstance(test_ret_1, dict) and isinstance(test_ret_2, dict)
@@ -245,7 +246,8 @@ class TestDataAnalyzer(unittest.TestCase):
 
     def test_sample_operations(self):
         op = SampleOperations()
-        test_data_np = np.random.rand(10, 10).astype(np.float64)
+        rng = np.random.default_rng()
+        test_data_np = rng.random(10, 10).astype(np.float64)
         test_data_mt = MetaTensor(test_data_np, device=device)
         test_ret_np = op.evaluate(test_data_np)
         test_ret_mt = op.evaluate(test_data_mt)
@@ -272,7 +274,8 @@ class TestDataAnalyzer(unittest.TestCase):
 
     def test_basic_analyzer_class(self):
         test_data = {}
-        test_data["image_test"] = np.random.rand(10, 10)
+        rng = np.random.default_rng()
+        test_data["image_test"] = rng.random(10, 10)
         report_format = {"stats": None}
         user_analyzer = TestAnalyzer("image_test", report_format)
         user_analyzer.update_ops("stats", TestOperations())

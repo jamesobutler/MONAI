@@ -172,7 +172,8 @@ class TestContour(unittest.TestCase):
         self.assertRaises(ValueError, LabelToContour(**input_param), error_input)
         error_input = torch.rand(1, 2, 3, 4, 5)
         self.assertRaises(ValueError, LabelToContour(**input_param), error_input)
-        error_input = np.random.rand(1, 2, 3, 4, 5)
+        rng = np.random.default_rng()
+        error_input = rng.random(1, 2, 3, 4, 5)
         self.assertRaises(ValueError, LabelToContour(**input_param), error_input)
 
 

@@ -367,7 +367,7 @@ def set_determinism(
     global _seed
     _seed = seed
     random.seed(seed)
-    np.random.seed(seed)
+    np.random.default_rng(seed=seed)
 
     if additional_settings is not None:
         additional_settings = ensure_tuple(additional_settings)

@@ -61,8 +61,9 @@ class TestImageDataset(unittest.TestCase):
 
     def test_use_case(self):
         with tempfile.TemporaryDirectory() as tempdir:
-            img_ = nib.Nifti1Image(np.random.randint(0, 2, size=(20, 20, 20)).astype(float), np.eye(4))
-            seg_ = nib.Nifti1Image(np.random.randint(0, 2, size=(20, 20, 20)).astype(float), np.eye(4))
+            rng = np.random.default_rng()
+            img_ = nib.Nifti1Image(rng.integers(0, 2, size=(20, 20, 20)).astype(float), np.eye(4))
+            seg_ = nib.Nifti1Image(rng.integers(0, 2, size=(20, 20, 20)).astype(float), np.eye(4))
             img_name, seg_name = os.path.join(tempdir, "img.nii.gz"), os.path.join(tempdir, "seg.nii.gz")
             nib.save(img_, img_name)
             nib.save(seg_, seg_name)
@@ -85,7 +86,8 @@ class TestImageDataset(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tempdir:
             full_names, ref_data = [], []
             for filename in FILENAMES:
-                test_image = np.random.randint(0, 2, size=(4, 4, 4)).astype(float)
+                rng = np.random.default_rng()
+                test_image = rng.integers(0, 2, size=(4, 4, 4)).astype(float)
                 ref_data.append(test_image)
                 save_path = os.path.join(tempdir, filename)
                 full_names.append(save_path)

@@ -23,8 +23,9 @@ from monai.data import NPZDictItemDataset
 class TestNPZDictItemDataset(unittest.TestCase):
 
     def test_load_stream(self):
-        dat0 = np.random.rand(10, 1, 4, 4)
-        dat1 = np.random.rand(10, 1, 4, 4)
+        rng = np.random.default_rng()
+        dat0 = rng.random(10, 1, 4, 4)
+        dat1 = rng.random(10, 1, 4, 4)
 
         npzfile = BytesIO()
         np.savez_compressed(npzfile, dat0=dat0, dat1=dat1)
@@ -38,8 +39,9 @@ class TestNPZDictItemDataset(unittest.TestCase):
         np.testing.assert_allclose(item["seg"].shape, (1, 4, 4))
 
     def test_load_file(self):
-        dat0 = np.random.rand(10, 1, 4, 4)
-        dat1 = np.random.rand(10, 1, 4, 4)
+        rng = np.random.default_rng()
+        dat0 = rng.random(10, 1, 4, 4)
+        dat1 = rng.random(10, 1, 4, 4)
 
         with tempfile.TemporaryDirectory() as tempdir:
             npzfile = f"{tempdir}/test.npz"

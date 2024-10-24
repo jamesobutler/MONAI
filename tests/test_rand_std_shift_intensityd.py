@@ -24,10 +24,11 @@ class TestRandStdShiftIntensityd(NumpyImageTestCase2D):
     def test_value(self):
         for p in TEST_NDARRAYS:
             key = "img"
-            np.random.seed(0)
+            np.random.default_rng(0)
             # simulate the randomize() of transform
-            np.random.random()
-            factor = np.random.uniform(low=-1.0, high=1.0)
+            rng = np.random.default_rng()
+            rng.random()
+            factor = rng.uniform(low=-1.0, high=1.0)
             expected = self.imt + factor * np.std(self.imt)
             shifter = RandStdShiftIntensityd(keys=[key], factors=1.0, prob=1.0)
             shifter.set_random_state(seed=0)

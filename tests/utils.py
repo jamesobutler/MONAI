@@ -452,7 +452,8 @@ class DistCall:
             )
         self.node_rank = int(os.environ.get("NODE_RANK", "0")) if node_rank is None else int(node_rank)
         self.master_addr = master_addr
-        self.master_port = np.random.randint(10000, 20000) if master_port is None else master_port
+        rng = np.random.default_rng()
+        self.master_port = rng.integers(10000, 20000) if master_port is None else master_port
 
         if backend is None:
             self.backend = "nccl" if torch.distributed.is_nccl_available() and torch.cuda.is_available() else "gloo"

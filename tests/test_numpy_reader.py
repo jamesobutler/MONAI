@@ -26,7 +26,8 @@ from tests.utils import assert_allclose
 class TestNumpyReader(unittest.TestCase):
 
     def test_npy(self):
-        test_data = np.random.randint(0, 256, size=[3, 4, 4])
+        rng = np.random.default_rng()
+        test_data = rng.integers(0, 256, size=[3, 4, 4])
         with tempfile.TemporaryDirectory() as tempdir:
             filepath = os.path.join(tempdir, "test_data.npy")
             np.save(filepath, test_data)
@@ -38,7 +39,8 @@ class TestNumpyReader(unittest.TestCase):
         np.testing.assert_allclose(result[0], test_data)
 
     def test_npz1(self):
-        test_data1 = np.random.randint(0, 256, size=[3, 4, 4])
+        rng = np.random.default_rng()
+        test_data1 = rng.integers(0, 256, size=[3, 4, 4])
         with tempfile.TemporaryDirectory() as tempdir:
             filepath = os.path.join(tempdir, "test_data.npy")
             np.save(filepath, test_data1)
@@ -50,8 +52,9 @@ class TestNumpyReader(unittest.TestCase):
         np.testing.assert_allclose(result[0], test_data1)
 
     def test_npz2(self):
-        test_data1 = np.random.randint(0, 256, size=[3, 4, 4])
-        test_data2 = np.random.randint(0, 256, size=[3, 4, 4])
+        rng = np.random.default_rng()
+        test_data1 = rng.integers(0, 256, size=[3, 4, 4])
+        test_data2 = rng.integers(0, 256, size=[3, 4, 4])
         with tempfile.TemporaryDirectory() as tempdir:
             filepath = os.path.join(tempdir, "test_data.npz")
             np.savez(filepath, test_data1, test_data2)
@@ -63,8 +66,9 @@ class TestNumpyReader(unittest.TestCase):
         np.testing.assert_allclose(result[0], np.stack([test_data1, test_data2]))
 
     def test_npz3(self):
-        test_data1 = np.random.randint(0, 256, size=[3, 4, 4])
-        test_data2 = np.random.randint(0, 256, size=[3, 4, 4])
+        rng = np.random.default_rng()
+        test_data1 = rng.integers(0, 256, size=[3, 4, 4])
+        test_data2 = rng.integers(0, 256, size=[3, 4, 4])
         with tempfile.TemporaryDirectory() as tempdir:
             filepath = os.path.join(tempdir, "test_data.npz")
             np.savez(filepath, test1=test_data1, test2=test_data2)
@@ -76,7 +80,8 @@ class TestNumpyReader(unittest.TestCase):
         np.testing.assert_allclose(result[0], np.stack([test_data1, test_data2]))
 
     def test_npy_pickle(self):
-        test_data = {"test": np.random.randint(0, 256, size=[3, 4, 4])}
+        rng = np.random.default_rng()
+        test_data = {"test": rng.integers(0, 256, size=[3, 4, 4])}
         with tempfile.TemporaryDirectory() as tempdir:
             filepath = os.path.join(tempdir, "test_data.npy")
             np.save(filepath, test_data, allow_pickle=True)
@@ -87,7 +92,8 @@ class TestNumpyReader(unittest.TestCase):
         np.testing.assert_allclose(result["test"], test_data["test"])
 
     def test_kwargs(self):
-        test_data = {"test": np.random.randint(0, 256, size=[3, 4, 4])}
+        rng = np.random.default_rng()
+        test_data = {"test": rng.integers(0, 256, size=[3, 4, 4])}
         with tempfile.TemporaryDirectory() as tempdir:
             filepath = os.path.join(tempdir, "test_data.npy")
             np.save(filepath, test_data, allow_pickle=True)
@@ -97,7 +103,8 @@ class TestNumpyReader(unittest.TestCase):
         np.testing.assert_allclose(result["test"].shape, test_data["test"].shape)
 
     def test_dataloader(self):
-        test_data = np.random.randint(0, 256, size=[3, 4, 5])
+        rng = np.random.default_rng()
+        test_data = rng.integers(0, 256, size=[3, 4, 5])
         datalist_dict, datalist_array = [], []
         with tempfile.TemporaryDirectory() as tempdir:
             for i in range(4):
@@ -126,7 +133,8 @@ class TestNumpyReader(unittest.TestCase):
                     assert_allclose(c, test_data, type_test=False)
 
     def test_channel_dim(self):
-        test_data = np.random.randint(0, 256, size=[3, 4, 5, 2])
+        rng = np.random.default_rng()
+        test_data = rng.integers(0, 256, size=[3, 4, 5, 2])
         with tempfile.TemporaryDirectory() as tempdir:
             filepath = os.path.join(tempdir, "test_data.npy")
             np.save(filepath, test_data)

@@ -37,14 +37,16 @@ class TestBoundingRect(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2, TEST_CASE_3])
     def test_shape(self, input_shape, expected):
-        test_data = np.random.randint(0, 8, size=input_shape)
+        rng = np.random.default_rng()
+        test_data = rng.integers(0, 8, size=input_shape)
         test_data = test_data == 7
         for p in TEST_NDARRAYS:
             result = BoundingRect()(p(test_data))
             np.testing.assert_allclose(result, expected)
 
     def test_select_fn(self):
-        test_data = np.random.randint(0, 8, size=(2, 3))
+        rng = np.random.default_rng()
+        test_data = rng.integers(0, 8, size=(2, 3))
         test_data = test_data == 7
         for p in TEST_NDARRAYS:
             bbox = BoundingRect(select_fn=lambda x: x < 1)(p(test_data))

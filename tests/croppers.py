@@ -27,7 +27,8 @@ class CropTest(unittest.TestCase):
 
     @staticmethod
     def get_arr(shape):
-        return np.random.randint(100, size=shape).astype(float)
+        rng = np.random.default_rng()
+        return rng.integers(100, size=shape).astype(float)
 
     def crop_test(self, input_param, input_shape, expected_shape, same_area=None):
         base_comparison = None

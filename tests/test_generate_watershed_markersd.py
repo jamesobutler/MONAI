@@ -28,38 +28,39 @@ TESTS = []
 
 np.random.RandomState(123)
 
+rng = np.random.default_rng()
 for p in TEST_NDARRAYS:
     EXCEPTION_TESTS.append(
         [
             {"mask_key": "mask", "border_key": "border"},
-            p(np.random.rand(2, 5, 5)),
-            p(np.random.rand(1, 5, 5)),
+            p(rng.random(2, 5, 5)),
+            p(rng.random(1, 5, 5)),
             ValueError,
         ]
     )
     EXCEPTION_TESTS.append(
         [
             {"mask_key": "mask", "border_key": "border"},
-            p(np.random.rand(1, 5, 5)),
-            p(np.random.rand(2, 5, 5)),
+            p(rng.random(1, 5, 5)),
+            p(rng.random(2, 5, 5)),
             ValueError,
         ]
     )
     EXCEPTION_TESTS.append(
         [
             {"mask_key": "mask", "border_key": "border", "markers_key": "old_markers"},
-            p(np.random.rand(1, 5, 5)),
-            p(np.random.rand(1, 5, 5)),
+            p(rng.random(1, 5, 5)),
+            p(rng.random(1, 5, 5)),
             KeyError,
         ]
     )
 
-    TESTS.append([{}, p(np.random.rand(1, 5, 5)), p(np.random.rand(1, 5, 5)), (1, 5, 5)])
+    TESTS.append([{}, p(rng.random(1, 5, 5)), p(rng.random(1, 5, 5)), (1, 5, 5)])
     TESTS.append(
         [
             {"threshold": 0.4, "radius": 1, "min_object_size": 0},
-            p(np.random.rand(1, 5, 5)),
-            p(np.random.rand(1, 5, 5)),
+            p(rng.random(1, 5, 5)),
+            p(rng.random(1, 5, 5)),
             (1, 5, 5),
         ]
     )

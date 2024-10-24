@@ -219,7 +219,8 @@ class IntegrationClassification2D(DistTestCase):
         self.val_x, self.val_y = [], []
         self.test_x, self.test_y = [], []
         for i in range(len(image_classes)):
-            rann = np.random.random()
+            rng = np.random.default_rng()
+            rann = rng.random()
             if rann < valid_frac:
                 self.val_x.append(image_file_list[i])
                 self.val_y.append(image_classes[i])

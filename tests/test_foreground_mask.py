@@ -23,8 +23,9 @@ from tests.utils import TEST_NDARRAYS, assert_allclose
 skimage, has_skimage = optional_import("skimage", "0.19.0", min_version)
 set_determinism(1234)
 
-A = np.random.randint(64, 128, (3, 3, 2)).astype(np.uint8)
-A3D = np.random.randint(64, 128, (3, 3, 2, 2)).astype(np.uint8)
+rng = np.random.default_rng()
+A = rng.integers(64, 128, (3, 3, 2)).astype(np.uint8)
+A3D = rng.integers(64, 128, (3, 3, 2, 2)).astype(np.uint8)
 B = np.ones_like(A[:1])
 B3D = np.ones_like(A3D[:1])
 MASK = np.pad(B, ((0, 0), (2, 2), (2, 2)), constant_values=0)

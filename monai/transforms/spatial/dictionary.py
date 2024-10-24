@@ -699,7 +699,7 @@ class RandRotate90d(RandomizableTransform, MapTransform, InvertibleTransform, La
                 See also: :py:class:`monai.transforms.compose.MapTransform`
             prob: probability of rotating.
                 (Default 0.1, with 10% probability it returns a rotated array.)
-            max_k: number of rotations will be sampled from `np.random.randint(max_k) + 1`.
+            max_k: number of rotations will be sampled from `rng.integers(max_k) + 1`.
                 (Default 3)
             spatial_axes: 2 int numbers, defines the plane to rotate with 2 spatial axes.
                 Default: (0, 1), this is the first two axis in spatial dimensions.
@@ -2348,7 +2348,7 @@ class GridPatchd(MapTransform, MultiSampleTrait):
         keys: keys of the corresponding items to be transformed.
         patch_size: size of patches to generate slices for, 0 or None selects whole dimension
         offset: starting position in the array, default is 0 for each dimension.
-            np.random.randint(0, patch_size, 2) creates random start between 0 and `patch_size` for a 2D image.
+            rng.integers(0, patch_size, 2) creates random start between 0 and `patch_size` for a 2D image.
         num_patches: number of patches (or maximum number of patches) to return.
             If the requested number of patches is greater than the number of available patches,
             padding will be applied to provide exactly `num_patches` patches unless `threshold` is set.

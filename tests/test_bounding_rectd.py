@@ -37,7 +37,8 @@ class TestBoundingRectD(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2, TEST_CASE_3])
     def test_shape(self, input_shape, expected):
-        test_data = np.random.randint(0, 8, size=input_shape)
+        rng = np.random.default_rng()
+        test_data = rng.integers(0, 8, size=input_shape)
         test_data = test_data == 7
         for p in TEST_NDARRAYS:
             result = BoundingRectD("image")({"image": p(test_data)})

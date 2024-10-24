@@ -22,22 +22,23 @@ from tests.utils import TEST_NDARRAYS, assert_allclose
 
 TESTS, TEST_CASES_ERROR_1, TEST_CASES_ERROR_2 = [], [], []
 for p in TEST_NDARRAYS:
+    rng = np.random.default_rng()
     TESTS.append(
         [
             {"spatial_dims": (0, 1, 2), "keys": ["img"]},
-            {"img": p(np.random.randint(0, 2, size=(1, 3, 3, 3)))},
+            {"img": p(rng.integers(0, 2, size=(1, 3, 3, 3)))},
             (4, 3, 3, 3),
         ]
     )
     TESTS.append(
-        [{"spatial_dims": (0,), "keys": ["img"]}, {"img": p(np.random.randint(0, 2, size=(1, 3, 3, 3)))}, (2, 3, 3, 3)]
+        [{"spatial_dims": (0,), "keys": ["img"]}, {"img": p(rng.integers(0, 2, size=(1, 3, 3, 3)))}, (2, 3, 3, 3)]
     )
 
     TEST_CASES_ERROR_1.append(
-        [{"spatial_dims": (2,), "keys": ["img"]}, {"img": p(np.random.randint(0, 2, size=(1, 3, 3)))}]
+        [{"spatial_dims": (2,), "keys": ["img"]}, {"img": p(rng.integers(0, 2, size=(1, 3, 3)))}]
     )
     TEST_CASES_ERROR_2.append(
-        [{"spatial_dims": (-1, 0, 1), "keys": ["img"]}, {"img": p(np.random.randint(0, 2, size=(1, 3, 3)))}]
+        [{"spatial_dims": (-1, 0, 1), "keys": ["img"]}, {"img": p(rng.integers(0, 2, size=(1, 3, 3)))}]
     )
 
 

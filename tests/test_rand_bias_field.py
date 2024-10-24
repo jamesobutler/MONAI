@@ -36,7 +36,8 @@ class TestRandBiasField(unittest.TestCase):
         for p in TEST_NDARRAYS:
             for degree in [1, 2, 3]:
                 bias_field = RandBiasField(degree=degree, **class_args)
-                img = p(np.random.rand(*img_shape))
+                rng = np.random.default_rng()
+                img = p(rng.random(*img_shape))
                 output = bias_field(img)
                 np.testing.assert_equal(output.shape, img_shape)
                 self.assertIn(output.dtype, (np.float32, torch.float32))
@@ -61,7 +62,8 @@ class TestRandBiasField(unittest.TestCase):
 
     def test_zero_prob(self):
         bias_field = RandBiasField(prob=0.0)
-        img = np.random.rand(3, 32, 32)
+        rng = np.random.default_rng()
+        img = rng.random(3, 32, 32)
         output = bias_field(img)
         np.testing.assert_equal(output, img)
 

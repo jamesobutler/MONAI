@@ -48,9 +48,10 @@ class TestHandlerTBImage(unittest.TestCase):
             stats_handler = TensorBoardImageHandler(log_dir=tempdir)
             engine.add_event_handler(Events.ITERATION_COMPLETED, stats_handler)
 
+            rng = np.random.default_rng()
             data = zip(
-                torch.as_tensor(np.random.normal(size=(10, 4, *shape))),
-                torch.as_tensor(np.random.normal(size=(10, 4, *shape))),
+                torch.as_tensor(rng.normal(size=(10, 4, *shape))),
+                torch.as_tensor(rng.normal(size=(10, 4, *shape))),
             )
             engine.run(data, epoch_length=10, max_epochs=1)
             stats_handler.close()

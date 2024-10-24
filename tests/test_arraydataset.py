@@ -82,7 +82,8 @@ class TestArrayDataset(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2, TEST_CASE_3])
     def test_shape(self, img_transform, label_transform, indices, expected_shape):
-        test_image = nib.Nifti1Image(np.random.randint(0, 2, size=(128, 128, 128)).astype(float), np.eye(4))
+        rng = np.random.default_rng()
+        test_image = nib.Nifti1Image(rng.integers(0, 2, size=(128, 128, 128)).astype(float), np.eye(4))
         with tempfile.TemporaryDirectory() as tempdir:
             test_image1 = os.path.join(tempdir, "test_image1.nii.gz")
             test_seg1 = os.path.join(tempdir, "test_seg1.nii.gz")
@@ -116,7 +117,8 @@ class TestArrayDataset(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_4])
     def test_default_none(self, img_transform, expected_shape):
-        test_image = nib.Nifti1Image(np.random.randint(0, 2, size=(128, 128, 128)).astype(float), np.eye(4))
+        rng = np.random.default_rng()
+        test_image = nib.Nifti1Image(rng.integers(0, 2, size=(128, 128, 128)).astype(float), np.eye(4))
         with tempfile.TemporaryDirectory() as tempdir:
             test_image1 = os.path.join(tempdir, "test_image1.nii.gz")
             test_image2 = os.path.join(tempdir, "test_image2.nii.gz")
@@ -139,7 +141,8 @@ class TestArrayDataset(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_4])
     def test_dataloading_img(self, img_transform, expected_shape):
-        test_image = nib.Nifti1Image(np.random.randint(0, 2, size=(128, 128, 128)).astype(float), np.eye(4))
+        rng = np.random.default_rng()
+        test_image = nib.Nifti1Image(rng.integers(0, 2, size=(128, 128, 128)).astype(float), np.eye(4))
         with tempfile.TemporaryDirectory() as tempdir:
             test_image1 = os.path.join(tempdir, "test_image1.nii.gz")
             test_image2 = os.path.join(tempdir, "test_image2.nii.gz")
@@ -160,7 +163,8 @@ class TestArrayDataset(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_4])
     def test_dataloading_img_label(self, img_transform, expected_shape):
-        test_image = nib.Nifti1Image(np.random.randint(0, 2, size=(128, 128, 128)).astype(float), np.eye(4))
+        rng = np.random.default_rng()
+        test_image = nib.Nifti1Image(rng.integers(0, 2, size=(128, 128, 128)).astype(float), np.eye(4))
         with tempfile.TemporaryDirectory() as tempdir:
             test_image1 = os.path.join(tempdir, "test_image1.nii.gz")
             test_image2 = os.path.join(tempdir, "test_image2.nii.gz")

@@ -46,7 +46,8 @@ class TestCV2Dist(unittest.TestCase):
     def test_cv2_cuda_ops(self):
         print_config()
         ngpus_per_node = torch.cuda.device_count()
-        port = np.random.randint(10000, 20000)
+        rng = np.random.default_rng()
+        port = rng.integers(10000, 20000)
         torch.multiprocessing.spawn(main_worker, nprocs=ngpus_per_node, args=(ngpus_per_node, port))
 
 

@@ -275,7 +275,8 @@ class TestOrdering(unittest.TestCase):
 
     @parameterized.expand(TEST_REVERT)
     def test_revert(self, input_param):
-        sequence = np.random.randint(0, 100, size=input_param["dimensions"]).flatten()
+        rng = np.random.default_rng()
+        sequence = rng.integers(0, 100, size=input_param["dimensions"]).flatten()
 
         ordering = Ordering(**input_param)
 

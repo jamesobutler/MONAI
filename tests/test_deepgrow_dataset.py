@@ -60,10 +60,11 @@ class TestCreateDataset(unittest.TestCase):
         affine = np.eye(4)
         datalist = []
         for i in range(length):
+            rng = np.random.default_rng()
             if image_channel == 1:
-                image = np.random.randint(0, 2, size=(128, 128, 40))
+                image = rng.integers(0, 2, size=(128, 128, 40))
             else:
-                image = np.random.randint(0, 2, size=(128, 128, 40, image_channel))
+                image = rng.integers(0, 2, size=(128, 128, 40, image_channel))
             image_file = os.path.join(self.tempdir, f"image{i}.nii.gz")
             nib.save(nib.Nifti1Image(image.astype(float), affine), image_file)
 

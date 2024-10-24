@@ -33,7 +33,8 @@ class TestRandBiasFieldd(unittest.TestCase):
     def test_output_shape(self, class_args, img_shape):
         key = "img"
         bias_field = RandBiasFieldd(keys=[key], **class_args)
-        img = np.random.rand(*img_shape)
+        rng = np.random.default_rng()
+        img = rng.random(*img_shape)
         output = bias_field({key: img})
         np.testing.assert_equal(output[key].shape, img_shape)
 
@@ -56,7 +57,8 @@ class TestRandBiasFieldd(unittest.TestCase):
     def test_zero_prob(self):
         key = "img"
         bias_field = RandBiasFieldd(keys=[key], prob=0.0)
-        img = np.random.rand(3, 32, 32)
+        rng = np.random.default_rng()
+        img = rng.random(3, 32, 32)
         output = bias_field({key: img})
         np.testing.assert_equal(output[key], img)
 

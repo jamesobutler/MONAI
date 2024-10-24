@@ -21,6 +21,7 @@ from monai.transforms import ClassesToIndicesd, RandCropByLabelClassesd
 from monai.transforms.lazy.functional import apply_pending
 from tests.utils import TEST_NDARRAYS_ALL, assert_allclose
 
+rng = np.random.default_rng()
 TESTS = []
 for p in TEST_NDARRAYS_ALL:
     TESTS.append(
@@ -37,9 +38,9 @@ for p in TEST_NDARRAYS_ALL:
                 "image_threshold": 0,
             },
             {
-                "img": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "label": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "img": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "label": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
             },
             list,
             (3, 2, 2, 3),
@@ -60,9 +61,9 @@ for p in TEST_NDARRAYS_ALL:
                 "image_threshold": 0,
             },
             {
-                "img": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "label": p(np.random.randint(0, 2, size=[1, 3, 3, 3])),
+                "img": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "label": p(rng.integers(0, 2, size=[1, 3, 3, 3])),
             },
             list,
             (3, 2, 2, 2),
@@ -84,9 +85,9 @@ for p in TEST_NDARRAYS_ALL:
                 "allow_smaller": True,
             },
             {
-                "img": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "label": p(np.random.randint(0, 1, size=[1, 3, 3, 3])),
+                "img": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "label": p(rng.integers(0, 1, size=[1, 3, 3, 3])),
             },
             list,
             (3, 3, 3, 2),
@@ -109,9 +110,9 @@ for p in TEST_NDARRAYS_ALL:
                 "max_samples_per_class": 10,
             },
             {
-                "img": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "label": p(np.random.randint(0, 2, size=[1, 3, 3, 3])),
+                "img": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "label": p(rng.integers(0, 2, size=[1, 3, 3, 3])),
             },
             list,
             (3, 3, 3, 3),

@@ -99,7 +99,8 @@ class TestRandZoomd(NumpyImageTestCase2D):
         )
         for p in TEST_NDARRAYS_ALL:
             random_zoom.set_random_state(1234)
-            test_data = {"img": p(np.random.randint(0, 2, size=[2, 2, 3, 4]))}
+            rng = np.random.default_rng()
+            test_data = {"img": p(rng.integers(0, 2, size=[2, 2, 3, 4]))}
             zoomed = random_zoom(test_data)
             assert_allclose(random_zoom.rand_zoom._zoom, (1.048844, 1.048844, 0.962637), atol=1e-2)
             assert_allclose(zoomed["img"].shape, (2, 2, 3, 3))

@@ -20,15 +20,16 @@ from monai.data import MetaTensor
 from monai.transforms import SqueezeDim
 from tests.utils import TEST_NDARRAYS, assert_allclose
 
+rng = np.random.default_rng()
 TESTS, TESTS_FAIL = [], []
 for p in TEST_NDARRAYS:
-    TESTS.append([{"dim": None}, p(np.random.rand(1, 2, 1, 3)), (2, 3)])
-    TESTS.append([{"dim": 2}, p(np.random.rand(1, 2, 1, 8, 16)), (1, 2, 8, 16)])
-    TESTS.append([{"dim": -1}, p(np.random.rand(1, 1, 16, 8, 1)), (1, 1, 16, 8)])
-    TESTS.append([{}, p(np.random.rand(1, 2, 1, 3)), (2, 1, 3)])
+    TESTS.append([{"dim": None}, p(rng.random(1, 2, 1, 3)), (2, 3)])
+    TESTS.append([{"dim": 2}, p(rng.random(1, 2, 1, 8, 16)), (1, 2, 8, 16)])
+    TESTS.append([{"dim": -1}, p(rng.random(1, 1, 16, 8, 1)), (1, 1, 16, 8)])
+    TESTS.append([{}, p(rng.random(1, 2, 1, 3)), (2, 1, 3)])
 
-    TESTS_FAIL.append([ValueError, {"dim": -2}, p(np.random.rand(1, 1, 16, 8, 1))])
-    TESTS_FAIL.append([TypeError, {"dim": 0.5}, p(np.random.rand(1, 1, 16, 8, 1))])
+    TESTS_FAIL.append([ValueError, {"dim": -2}, p(rng.random(1, 1, 16, 8, 1))])
+    TESTS_FAIL.append([TypeError, {"dim": 0.5}, p(rng.random(1, 1, 16, 8, 1))])
 
 
 class TestSqueezeDim(unittest.TestCase):
@@ -46,8 +47,9 @@ class TestSqueezeDim(unittest.TestCase):
             SqueezeDim(**input_param)(test_data)
 
     def test_affine_ill_inputs(self):
+        rng = np.random.default_rng()
         img = MetaTensor(
-            np.random.rand(1, 2, 1, 3),
+            rng.random(1, 2, 1, 3),
             affine=[
                 [-0.7422, 0.0, 0.0, 186.3210],
                 [0.0, 0.0, -3.0, 70.6580],

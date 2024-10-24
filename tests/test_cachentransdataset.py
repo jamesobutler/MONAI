@@ -37,7 +37,8 @@ class TestCacheNTransDataset(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_1])
     def test_n_trans(self, transform, expected_shape):
-        data_array = np.random.randint(0, 2, size=[128, 128, 128]).astype(float)
+        rng = np.random.default_rng()
+        data_array = rng.integers(0, 2, size=[128, 128, 128]).astype(float)
         test_image = nib.Nifti1Image(data_array, np.eye(4))
         with tempfile.TemporaryDirectory() as tempdir:
             nib.save(test_image, os.path.join(tempdir, "test_image.nii.gz"))

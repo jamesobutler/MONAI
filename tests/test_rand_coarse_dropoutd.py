@@ -19,19 +19,20 @@ from parameterized import parameterized
 from monai.transforms import RandCoarseDropoutd
 from monai.utils import fall_back_tuple
 
+rng = np.random.default_rng()
 TEST_CASE_0 = [
     {"keys": "img", "holes": 2, "spatial_size": [2, 2, 2], "fill_value": 5, "prob": 1.0},
-    {"img": np.random.randint(0, 2, size=[3, 3, 3, 4])},
+    {"img": rng.integers(0, 2, size=[3, 3, 3, 4])},
 ]
 
 TEST_CASE_1 = [
     {"keys": "img", "holes": 1, "spatial_size": [1, 2, 3], "fill_value": 5, "max_holes": 5, "prob": 1.0},
-    {"img": np.random.randint(0, 2, size=[3, 3, 3, 4])},
+    {"img": rng.integers(0, 2, size=[3, 3, 3, 4])},
 ]
 
 TEST_CASE_2 = [
     {"keys": "img", "holes": 2, "spatial_size": [2, 2, 2], "fill_value": 5, "max_spatial_size": [4, 4, 3], "prob": 1.0},
-    {"img": np.random.randint(0, 2, size=[3, 3, 3, 4])},
+    {"img": rng.integers(0, 2, size=[3, 3, 3, 4])},
 ]
 
 TEST_CASE_3 = [
@@ -43,22 +44,23 @@ TEST_CASE_3 = [
         "max_spatial_size": [4, 4, -1],
         "prob": 1.0,
     },
-    {"img": np.random.randint(0, 2, size=[3, 3, 3, 4])},
+    {"img": rng.integers(0, 2, size=[3, 3, 3, 4])},
 ]
 
+rng = np.random.default_rng()
 TEST_CASE_4 = [
     {"keys": "img", "holes": 2, "spatial_size": [2, 2, 2], "fill_value": (0.2, 0.6), "prob": 1.0},
-    {"img": np.random.rand(3, 3, 3, 4)},
+    {"img": rng.random(3, 3, 3, 4)},
 ]
 
 TEST_CASE_5 = [
     {"keys": "img", "holes": 2, "spatial_size": [2, 2, 2], "fill_value": None, "prob": 1.0},
-    {"img": np.random.rand(3, 3, 3, 4)},
+    {"img": rng.random(3, 3, 3, 4)},
 ]
 
 TEST_CASE_6 = [
     {"keys": "img", "holes": 2, "spatial_size": [2, 2, 2], "dropout_holes": False, "fill_value": 0.5, "prob": 1.0},
-    {"img": np.random.rand(3, 3, 3, 4)},
+    {"img": rng.random(3, 3, 3, 4)},
 ]
 
 

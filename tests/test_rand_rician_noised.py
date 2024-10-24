@@ -35,14 +35,15 @@ class TestRandRicianNoisedNumpy(NumpyImageTestCase2D):
         rician_fn = RandRicianNoised(keys=keys, prob=1.0, mean=mean, std=std, dtype=np.float64)
         rician_fn.set_random_state(seed)
         noised = rician_fn({k: in_type(self.imt) for k in keys})
-        np.random.seed(seed)
+        np.random.default_rng(seed)
         for k in keys:
             # simulate the `randomize` function of transform
-            np.random.random()
-            _std = np.random.uniform(0, std)
+            rng = np.random.default_rng()
+            rng.random()
+            _std = rng.uniform(0, std)
             expected = np.sqrt(
-                (self.imt + np.random.normal(mean, _std, size=self.imt.shape)) ** 2
-                + np.random.normal(mean, _std, size=self.imt.shape) ** 2
+                (self.imt + rng.normal(mean, _std, size=self.imt.shape)) ** 2
+                + rng.normal(mean, _std, size=self.imt.shape) ** 2
             )
             if isinstance(noised[k], torch.Tensor):
                 noised[k] = noised[k].cpu()

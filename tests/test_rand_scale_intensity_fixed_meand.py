@@ -27,13 +27,14 @@ class TestRandScaleIntensityFixedMeand(NumpyImageTestCase2D):
             scaler = RandScaleIntensityFixedMeand(keys=[key], factors=0.5, prob=1.0)
             scaler.set_random_state(seed=0)
             result = scaler({key: p(self.imt)})
-            np.random.seed(0)
+            np.random.default_rng(0)
             # simulate the randomize function of transform
-            np.random.random()
+            rng = np.random.default_rng()
+            rng.random()
             im = self.imt
             mn = im.mean()
             im = im - mn
-            expected = (1 + np.random.uniform(low=-0.5, high=0.5)) * im
+            expected = (1 + rng.uniform(low=-0.5, high=0.5)) * im
             expected = expected + mn
             assert_allclose(result[key], p(expected), type_test="tensor", atol=1e-6)
 

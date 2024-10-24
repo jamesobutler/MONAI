@@ -183,12 +183,14 @@ class TestLoadSaveNrrd(unittest.TestCase):
 
     @parameterized.expand(itertools.product([NrrdReader, ITKReader], [ITKWriter, ITKWriter]))
     def test_2d(self, reader, writer):
-        test_data = np.random.randn(8, 8).astype(np.float32)
+        rng = np.random.default_rng()
+        test_data = rng.standard_normal(8, 8).astype(np.float32)
         self.nrrd_rw(test_data, reader, writer, np.float32)
 
     @parameterized.expand(itertools.product([NrrdReader, ITKReader], [ITKWriter, ITKWriter]))
     def test_3d(self, reader, writer):
-        test_data = np.random.randn(8, 8, 8).astype(np.float32)
+        rng = np.random.default_rng()
+        test_data = rng.standard_normal(8, 8, 8).astype(np.float32)
         self.nrrd_rw(test_data, reader, writer, np.float32)
 
 

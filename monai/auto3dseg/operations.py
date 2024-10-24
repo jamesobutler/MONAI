@@ -59,7 +59,8 @@ class SampleOperations(Operations):
             # use the existing operations
             import numpy as np
             op = SampleOperations()
-            data_np = np.random.rand(10, 10).astype(np.float64)
+            rng = np.random.default_rng()
+            data_np = rng.random(10, 10).astype(np.float64)
             print(op.evaluate(data_np))
 
             # add a new operation
@@ -115,11 +116,12 @@ class SummaryOperations(Operations):
         .. code-block:: python
 
             import numpy as np
+            rng = np.random.default_rng()
             data = {
-                "min": np.random.rand(4),
-                "max": np.random.rand(4),
-                "mean": np.random.rand(4),
-                "sum": np.random.rand(4),
+                "min": rng.random(4),
+                "max": rng.random(4),
+                "mean": rng.random(4),
+                "sum": rng.random(4),
             }
             op = SummaryOperations()
             print(op.evaluate(data)) # "sum" is not registered yet, so it won't contain "sum"

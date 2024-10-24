@@ -297,7 +297,8 @@ def copypaste_arrays(
     .. code-block:: python
 
         src_shape = (6,6)
-        src = np.random.randint(0,10,src_shape)
+        rng = np.random.default_rng()
+        src = rng.integers(0,10,src_shape)
         dest = np.zeros_like(src)
         srcslices, destslices = copypaste_arrays(src_shape, dest.shape, (3, 2),(2, 1),(3, 4))
         dest[destslices] = src[srcslices]
@@ -626,7 +627,7 @@ def correct_crop_centers(
     # int generation to have full range on upper side, but subtract unfloored size/2 to prevent rounded range
     # from being too high
     for i, valid_s in enumerate(valid_start):
-        # need this because np.random.randint does not work with same start and end
+        # need this because rng.integers does not work with same start and end
         if valid_s == valid_end[i]:
             valid_end[i] += 1
     valid_centers = []

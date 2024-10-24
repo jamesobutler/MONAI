@@ -36,7 +36,8 @@ class TestSplitDimd(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        arr = np.random.rand(2, 10, 8, 7)
+        rng = np.random.default_rng()
+        arr = rng.random(2, 10, 8, 7)
         affine = make_rand_affine()
         data = {"i": make_nifti_image(arr, affine)}
 
@@ -60,7 +61,8 @@ class TestSplitDimd(unittest.TestCase):
             # check same world coordinates between input and output
             if update_meta:
                 for _ in range(10):
-                    idx = [np.random.choice(i) for i in arr.shape]
+                    rng = np.random.default_rng()
+                    idx = [rng.choice(i) for i in arr.shape]
                     split_im_idx = idx[dim]
                     split_idx = deepcopy(idx)
                     split_idx[dim] = 0
@@ -87,7 +89,8 @@ class TestSplitDimd(unittest.TestCase):
     def test_singleton(self):
         shape = (2, 1, 8, 7)
         for p in TEST_NDARRAYS:
-            arr = p(np.random.rand(*shape))
+            rng = np.random.default_rng()
+            arr = p(rng.random(*shape))
             out = SplitDimd("i", dim=1)({"i": arr})
             self.assertEqual(out["i"].shape, shape)
 

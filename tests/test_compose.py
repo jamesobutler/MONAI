@@ -730,7 +730,8 @@ class TestComposeExecuteWithFlags(unittest.TestCase):
 class TestComposeCallableInput(unittest.TestCase):
 
     def test_value_error_when_not_sequence(self):
-        data = torch.tensor(np.random.randn(1, 5, 5))
+        rng = np.random.default_rng()
+        data = torch.tensor(rng.standard_normal(1, 5, 5))
 
         xform = mt.Compose([mt.Flip(0), mt.Flip(0)])
         res = xform(data)

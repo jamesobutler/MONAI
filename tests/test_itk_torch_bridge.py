@@ -390,17 +390,18 @@ class TestITKTorchAffineMatrixBridge(unittest.TestCase):
         # Create ITK image
         itk_img = itk.GetImageFromArray(img.squeeze().numpy())
 
+        rng = np.random.default_rng()
         # Set random spacing
-        spacing = 3 * np.random.rand(ndim)
+        spacing = 3 * rng.random(ndim)
         itk_img.SetSpacing(spacing)
 
         # Set random direction
-        direction = 5 * np.random.rand(ndim, ndim) - 5
+        direction = 5 * rng.random(ndim, ndim) - 5
         direction = itk.matrix_from_array(direction)
         itk_img.SetDirection(direction)
 
         # Set random origin
-        origin = 100 * np.random.rand(ndim) - 100
+        origin = 100 * rng.random(ndim) - 100
         itk_img.SetOrigin(origin)
 
         # Warp with ITK

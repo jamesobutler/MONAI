@@ -36,10 +36,11 @@ class TestRandGaussianNoise(NumpyImageTestCase2D):
         gaussian_fn.set_random_state(seed)
         im = im_type(self.imt)
         noised = gaussian_fn(im)
-        np.random.seed(seed)
-        np.random.random()
-        _std = np.random.uniform(0, std) if sample_std else std
-        expected = self.imt + np.random.normal(mean, _std, size=self.imt.shape)
+        np.random.default_rng(seed)
+        rng = np.random.default_rng()
+        rng.random()
+        _std = rng.uniform(0, std) if sample_std else std
+        expected = self.imt + rng.normal(mean, _std, size=self.imt.shape)
         if isinstance(noised, torch.Tensor):
             noised = noised.cpu()
         np.testing.assert_allclose(expected, noised, atol=1e-5)

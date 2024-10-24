@@ -123,7 +123,8 @@ def get_random_patch(
     """
 
     # choose the minimal corner of the patch
-    rand_int = np.random.randint if rand_state is None else rand_state.randint
+    rng = np.random.default_rng()
+    rand_int = rng.integers if rand_state is None else rand_state.randint
     min_corner = tuple(rand_int(0, ms - ps + 1) if ms > ps else 0 for ms, ps in zip(dims, patch_size))
 
     # create the slices for each dimension which define the patch in the source array

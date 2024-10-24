@@ -33,8 +33,9 @@ _, has_scipy = optional_import("scipy", "1.8.1", min_version)
 TESTS = []
 params = {"keys": "dist_map", "mask_key": "mask", "markers_key": "markers", "connectivity": 1}
 for p in TEST_NDARRAYS:
-    image = p(np.random.rand(1, 10, 10))
-    hover_map = p(np.random.rand(2, 10, 10))
+    rng = np.random.default_rng()
+    image = p(rng.random(1, 10, 10))
+    hover_map = p(rng.random(2, 10, 10))
 
     TESTS.append([params, image, hover_map, (1, 10, 10)])
 

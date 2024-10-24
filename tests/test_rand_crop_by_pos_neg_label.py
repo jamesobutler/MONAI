@@ -22,31 +22,32 @@ from monai.transforms import RandCropByPosNegLabel
 from monai.transforms.lazy.functional import apply_pending
 from tests.utils import TEST_NDARRAYS_ALL, assert_allclose
 
+rng = np.random.default_rng()
 TESTS = [
     [
         {
-            "label": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "label": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "spatial_size": [2, 2, -1],
             "pos": 1,
             "neg": 1,
             "num_samples": 2,
-            "image": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "image": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "image_threshold": 0,
         },
-        {"img": np.random.randint(0, 2, size=[3, 3, 3, 3])},
+        {"img": rng.integers(0, 2, size=[3, 3, 3, 3])},
         (3, 2, 2, 3),
     ],
     [
         {
-            "label": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "label": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "spatial_size": [2, 2, 2],
             "pos": 1,
             "neg": 1,
             "num_samples": 2,
-            "image": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "image": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "image_threshold": 0,
         },
-        {"img": np.random.randint(0, 2, size=[3, 3, 3, 3])},
+        {"img": rng.integers(0, 2, size=[3, 3, 3, 3])},
         (3, 2, 2, 2),
     ],
     [
@@ -56,40 +57,40 @@ TESTS = [
             "pos": 1,
             "neg": 1,
             "num_samples": 2,
-            "image": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "image": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "image_threshold": 0,
         },
         {
-            "img": np.random.randint(0, 2, size=[3, 3, 3, 3]),
-            "label": np.random.randint(0, 2, size=[3, 3, 3, 3]),
-            "image": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "img": rng.integers(0, 2, size=[3, 3, 3, 3]),
+            "label": rng.integers(0, 2, size=[3, 3, 3, 3]),
+            "image": rng.integers(0, 2, size=[3, 3, 3, 3]),
         },
         (3, 2, 2, 2),
     ],
     [
         {
-            "label": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "label": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "spatial_size": [4, 4, 2],
             "pos": 1,
             "neg": 1,
             "num_samples": 2,
-            "image": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "image": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "allow_smaller": True,
         },
-        {"img": np.random.randint(0, 2, size=[3, 3, 3, 3])},
+        {"img": rng.integers(0, 2, size=[3, 3, 3, 3])},
         (3, 3, 3, 2),
     ],
     [
         {
-            "label": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "label": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "spatial_size": [4, 4, 4],
             "pos": 1,
             "neg": 1,
             "num_samples": 2,
-            "image": np.random.randint(0, 2, size=[3, 3, 3, 3]),
+            "image": rng.integers(0, 2, size=[3, 3, 3, 3]),
             "allow_smaller": True,
         },
-        {"img": np.random.randint(0, 2, size=[3, 3, 3, 3])},
+        {"img": rng.integers(0, 2, size=[3, 3, 3, 3])},
         (3, 3, 3, 3),
     ],
 ]

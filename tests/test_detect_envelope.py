@@ -154,7 +154,8 @@ class TestDetectEnvelope(unittest.TestCase):
 class TestHilbertTransformNoFFTMod(unittest.TestCase):
 
     def test_no_fft_module_error(self):
-        self.assertRaises(OptionalImportError, DetectEnvelope(), np.random.rand(1, 10))
+        rng = np.random.default_rng()
+        self.assertRaises(OptionalImportError, DetectEnvelope(), rng.random(1, 10))
 
 
 if __name__ == "__main__":

@@ -41,12 +41,13 @@ class TestSetDeterminism(unittest.TestCase):
         seed = 255
         set_determinism(seed=seed)
         self.assertEqual(seed, get_seed())
-        a = np.random.randint(seed)
+        rng = np.random.default_rng()
+        a = rng.integers(seed)
         b = torch.randint(seed, (1,))
         # tset when global flag support is disabled
         torch.backends.disable_global_flags()
         set_determinism(seed=seed)
-        c = np.random.randint(seed)
+        c = rng.integers(seed)
         d = torch.randint(seed, (1,))
         self.assertEqual(a, c)
         self.assertEqual(b, d)

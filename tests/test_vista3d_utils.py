@@ -99,13 +99,14 @@ TEST_LCC_MASK_POINT_NP = []
 for bs in [1, 2]:
     for num_points in [1, 3]:
         shape = (bs, 1, 32, 32, 64)
+        rng = np.random.default_rng()
         TEST_LCC_MASK_POINT_NP.append(
             [
                 {
-                    "img_pos": np.random.randint(0, 2, shape, dtype=bool),
-                    "img_neg": np.random.randint(0, 2, shape, dtype=bool),
-                    "point_coords": np.random.randint(0, 5, (bs, num_points, 3)),
-                    "point_labels": np.random.randint(0, 4, (bs, num_points)),
+                    "img_pos": rng.integers(0, 2, shape, dtype=bool),
+                    "img_neg": rng.integers(0, 2, shape, dtype=bool),
+                    "point_coords": rng.integers(0, 5, (bs, num_points, 3)),
+                    "point_labels": rng.integers(0, 4, (bs, num_points)),
                 },
                 shape,
             ]

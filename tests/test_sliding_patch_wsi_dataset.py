@@ -38,8 +38,9 @@ FILE_PATH = os.path.join(os.path.dirname(__file__), "testing_data", f"temp_{FILE
 
 FILE_PATH_SMALL_0 = os.path.join(os.path.dirname(__file__), "testing_data", "temp_wsi_inference_0.tiff")
 FILE_PATH_SMALL_1 = os.path.join(os.path.dirname(__file__), "testing_data", "temp_wsi_inference_1.tiff")
-ARRAY_SMALL_0 = np.random.randint(low=0, high=255, size=(3, 4, 4), dtype=np.uint8)
-ARRAY_SMALL_1 = np.random.randint(low=0, high=255, size=(3, 5, 5), dtype=np.uint8)
+rng = np.random.default_rng()
+ARRAY_SMALL_0 = rng.integers(low=0, high=255, size=(3, 4, 4), dtype=np.uint8)
+ARRAY_SMALL_1 = rng.integers(low=0, high=255, size=(3, 5, 5), dtype=np.uint8)
 
 TEST_CASE_SMALL_0 = [
     {"data": [{"image": FILE_PATH_SMALL_0, WSIPatchKeys.LEVEL: 0}], "patch_size": (2, 2)},

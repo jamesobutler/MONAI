@@ -34,7 +34,8 @@ def run_test(batch_size=64, train_steps=200, device="cuda:0"):
 
         def __getitem__(self, _unused_id):
             im, seg = create_test_image_2d(128, 128, noise_max=1, num_objs=4, num_seg_classes=1)
-            seed = np.random.randint(2147483647)
+            rng = np.random.default_rng()
+            seed = rng.integers(2147483647)
             self.transforms.set_random_state(seed=seed)
             im = self.transforms(im)
             self.transforms.set_random_state(seed=seed)

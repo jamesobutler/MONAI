@@ -35,14 +35,15 @@ from monai.utils.enums import PostFix
 measure, _ = optional_import("skimage.measure", "0.14.2", min_version)
 
 set_determinism(seed=0)
-IMAGE = np.random.randint(0, 256, size=(1, 10, 10, 10))
-THREE_CHAN_IMAGE = np.random.randint(0, 255, size=(3, 10, 10, 10))
-LABEL = np.random.randint(0, 2, size=(10, 10, 10))
-PRED = np.random.randint(0, 2, size=(10, 10, 10))
+rng = np.random.default_rng()
+IMAGE = rng.integers(0, 256, size=(1, 10, 10, 10))
+THREE_CHAN_IMAGE = rng.integers(0, 255, size=(3, 10, 10, 10))
+LABEL = rng.integers(0, 2, size=(10, 10, 10))
+PRED = rng.integers(0, 2, size=(10, 10, 10))
 LABEL_NAMES = {"spleen": 1, "background": 0}
 DISCREPANCY = {
-    "spleen": np.random.randint(0, 2, size=(10, 10, 10)),
-    "background": np.random.randint(0, 2, size=(10, 10, 10)),
+    "spleen": rng.integers(0, 2, size=(10, 10, 10)),
+    "background": rng.integers(0, 2, size=(10, 10, 10)),
 }
 set_determinism(None)
 

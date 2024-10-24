@@ -29,7 +29,8 @@ class TestSplitDim(unittest.TestCase):
 
     @parameterized.expand(TESTS)
     def test_correct_shape(self, shape, keepdim, im_type):
-        arr = im_type(np.random.rand(*shape))
+        rng = np.random.default_rng()
+        arr = im_type(rng.random(*shape))
         for dim in range(arr.ndim):
             out = SplitDim(dim, keepdim)(arr)
             self.assertIsInstance(out, (list, tuple))
@@ -44,7 +45,8 @@ class TestSplitDim(unittest.TestCase):
     def test_singleton(self):
         shape = (2, 1, 8, 7)
         for p in TEST_NDARRAYS:
-            arr = p(np.random.rand(*shape))
+            rng = np.random.default_rng()
+            arr = p(rng.random(*shape))
             out = SplitDim(dim=1)(arr)
             self.assertEqual(out[0].shape, shape)
 

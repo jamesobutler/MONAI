@@ -120,9 +120,10 @@ class TestResized(NumpyImageTestCase2D):
 
     @parameterized.expand([TEST_CASE_0, TEST_CASE_1, TEST_CASE_2, TEST_CASE_3])
     def test_longest_shape(self, input_param, expected_shape):
+        rng = np.random.default_rng()
         input_data = {
-            "img": np.random.randint(0, 2, size=[3, 4, 7, 10]),
-            "label": np.random.randint(0, 2, size=[3, 4, 7, 10]),
+            "img": rng.integers(0, 2, size=[3, 4, 7, 10]),
+            "label": rng.integers(0, 2, size=[3, 4, 7, 10]),
         }
         input_param["size_mode"] = "longest"
         rescaler = Resized(**input_param)

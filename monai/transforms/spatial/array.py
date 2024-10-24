@@ -1209,7 +1209,7 @@ class RandRotate90(RandomizableTransform, InvertibleTransform, LazyTransform):
         Args:
             prob: probability of rotating.
                 (Default 0.1, with 10% probability it returns a rotated array)
-            max_k: number of rotations will be sampled from `np.random.randint(max_k) + 1`, (Default 3).
+            max_k: number of rotations will be sampled from `rng.integers(max_k) + 1`, (Default 3).
             spatial_axes: 2 int numbers, defines the plane to rotate with 2 spatial axes.
                 Default: (0, 1), this is the first two axis in spatial dimensions.
             lazy: a flag to indicate whether this transform should execute lazily or not.

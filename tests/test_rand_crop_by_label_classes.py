@@ -21,21 +21,22 @@ from monai.transforms import ClassesToIndices, RandCropByLabelClasses
 from monai.transforms.lazy.functional import apply_pending
 from tests.utils import TEST_NDARRAYS_ALL, assert_allclose
 
+rng = np.random.default_rng()
 TESTS_INDICES, TESTS_SHAPE = [], []
 for p in TEST_NDARRAYS_ALL:
     # One-Hot label
     TESTS_INDICES.append(
         [
             {
-                "label": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "label": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
                 "num_classes": None,
                 "spatial_size": [2, 2, -1],
                 "ratios": [1, 1, 1],
                 "num_samples": 2,
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
                 "image_threshold": 0,
             },
-            {"img": p(np.random.randint(0, 2, size=[3, 3, 3, 3]))},
+            {"img": p(rng.integers(0, 2, size=[3, 3, 3, 3]))},
             list,
             (3, 2, 2, 3),
         ]
@@ -45,15 +46,15 @@ for p in TEST_NDARRAYS_ALL:
         [
             # Argmax label
             {
-                "label": p(np.random.randint(0, 2, size=[1, 3, 3, 3])),
+                "label": p(rng.integers(0, 2, size=[1, 3, 3, 3])),
                 "num_classes": 2,
                 "spatial_size": [2, 2, 2],
                 "ratios": [1, 1],
                 "num_samples": 2,
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
                 "image_threshold": 0,
             },
-            {"img": p(np.random.randint(0, 2, size=[3, 3, 3, 3]))},
+            {"img": p(rng.integers(0, 2, size=[3, 3, 3, 3]))},
             list,
             (3, 2, 2, 2),
         ]
@@ -68,13 +69,13 @@ for p in TEST_NDARRAYS_ALL:
                 "spatial_size": [2, 2, 2],
                 "ratios": [1, 1],
                 "num_samples": 2,
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
                 "image_threshold": 0,
             },
             {
-                "img": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "label": p(np.random.randint(0, 2, size=[1, 3, 3, 3])),
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "img": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "label": p(rng.integers(0, 2, size=[1, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
             },
             list,
             (3, 2, 2, 2),
@@ -89,14 +90,14 @@ for p in TEST_NDARRAYS_ALL:
                 "spatial_size": [4, 4, 2],
                 "ratios": [1, 1],
                 "num_samples": 2,
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
                 "image_threshold": 0,
                 "allow_smaller": True,
             },
             {
-                "img": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "label": p(np.random.randint(0, 2, size=[1, 3, 3, 3])),
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "img": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "label": p(rng.integers(0, 2, size=[1, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
             },
             list,
             (3, 3, 3, 2),
@@ -111,14 +112,14 @@ for p in TEST_NDARRAYS_ALL:
                 "spatial_size": [4, 4, 4],
                 "ratios": (1, 1),  # test no assignment
                 "num_samples": 2,
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
                 "image_threshold": 0,
                 "allow_smaller": True,
             },
             {
-                "img": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
-                "label": p(np.random.randint(0, 1, size=[1, 3, 3, 3])),
-                "image": p(np.random.randint(0, 2, size=[3, 3, 3, 3])),
+                "img": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
+                "label": p(rng.integers(0, 1, size=[1, 3, 3, 3])),
+                "image": p(rng.integers(0, 2, size=[3, 3, 3, 3])),
             },
             list,
             (3, 3, 3, 3),

@@ -28,10 +28,11 @@ class TestRandScaleIntensity(NumpyImageTestCase2D):
         scaler.set_random_state(seed=0)
         im = p(self.imt)
         result = scaler(im)
-        np.random.seed(0)
+        np.random.default_rng(0)
         # simulate the randomize() of transform
-        np.random.random()
-        expected = p((self.imt * (1 + np.random.uniform(low=-0.5, high=0.5))).astype(np.float32))
+        rng = np.random.default_rng()
+        rng.random()
+        expected = p((self.imt * (1 + rng.uniform(low=-0.5, high=0.5))).astype(np.float32))
         assert_allclose(result, p(expected), rtol=1e-7, atol=0, type_test="tensor")
 
     @parameterized.expand([[p] for p in TEST_NDARRAYS])
@@ -40,11 +41,12 @@ class TestRandScaleIntensity(NumpyImageTestCase2D):
         scaler.set_random_state(seed=0)
         im = p(self.imt)
         result = scaler(im)
-        np.random.seed(0)
+        np.random.default_rng(0)
         # simulate the randomize() of transform
-        np.random.random()
+        rng = np.random.default_rng()
+        rng.random()
         channel_num = self.imt.shape[0]
-        factor = [np.random.uniform(low=-0.5, high=0.5) for _ in range(channel_num)]
+        factor = [rng.uniform(low=-0.5, high=0.5) for _ in range(channel_num)]
         expected = p(
             np.stack([np.asarray((self.imt[i]) * (1 + factor[i])) for i in range(channel_num)]).astype(np.float32)
         )

@@ -134,7 +134,8 @@ class TestDataset(unittest.TestCase):
     @unittest.skipUnless(has_nib, "Requires nibabel package.")
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2, TEST_CASE_3])
     def test_shape(self, transform, expected_shape):
-        test_image = nib.Nifti1Image(np.random.randint(0, 2, size=[128, 128, 128]).astype(float), np.eye(4))
+        rng = np.random.default_rng()
+        test_image = nib.Nifti1Image(rng.integers(0, 2, size=[128, 128, 128]).astype(float), np.eye(4))
         with tempfile.TemporaryDirectory() as tempdir:
             nib.save(test_image, os.path.join(tempdir, "test_image1.nii.gz"))
             nib.save(test_image, os.path.join(tempdir, "test_label1.nii.gz"))

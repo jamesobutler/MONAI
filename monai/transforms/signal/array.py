@@ -273,7 +273,8 @@ class SignalRandAddSinePartial(RandomizableTransform):
         data = convert_to_tensor(self.freqs * time_partial)
         sine_partial = self.magnitude * torch.sin(data)
 
-        loc = np.random.choice(range(length))
+        rng = np.random.default_rng()
+        loc = rng.choice(range(length))
         signal = paste(signal, sine_partial, (loc,))
 
         return signal
@@ -354,7 +355,8 @@ class SignalRandAddSquarePulsePartial(RandomizableTransform):
         time_partial = np.arange(0, round(self.fracs * length), 1)
         squaredpulse_partial = self.magnitude * squarepulse(self.freqs * time_partial)
 
-        loc = np.random.choice(range(length))
+        rng = np.random.default_rng()
+        loc = rng.choice(range(length))
         signal = paste(signal, squaredpulse_partial, (loc,))
 
         return signal

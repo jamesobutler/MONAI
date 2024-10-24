@@ -49,7 +49,6 @@ select = [
 extend-ignore = [
   "E741", # ambiguous variable name
   "F401", # unused import
-  "NPY002", # numpy-legacy-random
 ]
 
 [tool.pytype]

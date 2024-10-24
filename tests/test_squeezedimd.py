@@ -20,12 +20,13 @@ from monai.data import MetaTensor
 from monai.transforms import SqueezeDimd
 from tests.utils import TEST_NDARRAYS, assert_allclose
 
+rng = np.random.default_rng()
 TESTS, TESTS_FAIL = [], []
 for p in TEST_NDARRAYS:
     TESTS.append(
         [
             {"keys": ["img", "seg"], "dim": None},
-            {"img": p(np.random.rand(1, 2, 1, 3)), "seg": p(np.random.randint(0, 2, size=[1, 2, 1, 3]))},
+            {"img": p(rng.random(1, 2, 1, 3)), "seg": p(rng.integers(0, 2, size=[1, 2, 1, 3]))},
             (2, 3),
         ]
     )
@@ -33,7 +34,7 @@ for p in TEST_NDARRAYS:
     TESTS.append(
         [
             {"keys": ["img", "seg"], "dim": 2},
-            {"img": p(np.random.rand(1, 2, 1, 8, 16)), "seg": p(np.random.randint(0, 2, size=[1, 2, 1, 8, 16]))},
+            {"img": p(rng.random(1, 2, 1, 8, 16)), "seg": p(rng.integers(0, 2, size=[1, 2, 1, 8, 16]))},
             (1, 2, 8, 16),
         ]
     )
@@ -41,7 +42,7 @@ for p in TEST_NDARRAYS:
     TESTS.append(
         [
             {"keys": ["img", "seg"], "dim": -1},
-            {"img": p(np.random.rand(1, 1, 16, 8, 1)), "seg": p(np.random.randint(0, 2, size=[1, 1, 16, 8, 1]))},
+            {"img": p(rng.random(1, 1, 16, 8, 1)), "seg": p(rng.integers(0, 2, size=[1, 1, 16, 8, 1]))},
             (1, 1, 16, 8),
         ]
     )
@@ -49,7 +50,7 @@ for p in TEST_NDARRAYS:
     TESTS.append(
         [
             {"keys": ["img", "seg"]},
-            {"img": p(np.random.rand(1, 2, 1, 3)), "seg": p(np.random.randint(0, 2, size=[1, 2, 1, 3]))},
+            {"img": p(rng.random(1, 2, 1, 3)), "seg": p(rng.integers(0, 2, size=[1, 2, 1, 3]))},
             (2, 1, 3),
         ]
     )
@@ -57,7 +58,7 @@ for p in TEST_NDARRAYS:
     TESTS.append(
         [
             {"keys": ["img", "seg"], "dim": 0},
-            {"img": p(np.random.rand(1, 2, 1, 3)), "seg": p(np.random.randint(0, 2, size=[1, 2, 1, 3]))},
+            {"img": p(rng.random(1, 2, 1, 3)), "seg": p(rng.integers(0, 2, size=[1, 2, 1, 3]))},
             (2, 1, 3),
         ]
     )
@@ -66,7 +67,7 @@ for p in TEST_NDARRAYS:
         [
             ValueError,
             {"keys": ["img", "seg"], "dim": -2},
-            {"img": p(np.random.rand(1, 1, 16, 8, 1)), "seg": p(np.random.randint(0, 2, size=[1, 1, 16, 8, 1]))},
+            {"img": p(rng.random(1, 1, 16, 8, 1)), "seg": p(rng.integers(0, 2, size=[1, 1, 16, 8, 1]))},
         ]
     )
 
@@ -74,7 +75,7 @@ for p in TEST_NDARRAYS:
         [
             TypeError,
             {"keys": ["img", "seg"], "dim": 0.5},
-            {"img": p(np.random.rand(1, 1, 16, 8, 1)), "seg": p(np.random.randint(0, 2, size=[1, 1, 16, 8, 1]))},
+            {"img": p(rng.random(1, 1, 16, 8, 1)), "seg": p(rng.integers(0, 2, size=[1, 1, 16, 8, 1]))},
         ]
     )
 

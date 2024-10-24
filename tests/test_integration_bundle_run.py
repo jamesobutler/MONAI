@@ -155,7 +155,8 @@ class TestBundleRun(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2])
     def test_shape(self, config_file, expected_shape):
-        test_image = np.random.rand(*expected_shape)
+        rng = np.random.default_rng()
+        test_image = rng.random(*expected_shape)
         tempdir = self.data_dir
         filename = os.path.join(tempdir, "image.nii")
         nib.save(nib.Nifti1Image(test_image, np.eye(4)), filename)
@@ -226,7 +227,8 @@ class TestBundleRun(unittest.TestCase):
 
     def test_customized_workflow(self):
         expected_shape = (64, 64, 64)
-        test_image = np.random.rand(*expected_shape)
+        rng = np.random.default_rng()
+        test_image = rng.random(*expected_shape)
         filename = os.path.join(self.data_dir, "image.nii")
         nib.save(nib.Nifti1Image(test_image, np.eye(4)), filename)
 

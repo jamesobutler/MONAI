@@ -30,10 +30,11 @@ class TestAsChannelLastd(unittest.TestCase):
 
     @parameterized.expand(TESTS)
     def test_shape(self, in_type, input_param, expected_shape):
+        rng = np.random.default_rng()
         test_data = {
-            "image": in_type(np.random.randint(0, 2, size=[1, 2, 3, 4])),
-            "label": in_type(np.random.randint(0, 2, size=[1, 2, 3, 4])),
-            "extra": in_type(np.random.randint(0, 2, size=[1, 2, 3, 4])),
+            "image": in_type(rng.integers(0, 2, size=[1, 2, 3, 4])),
+            "label": in_type(rng.integers(0, 2, size=[1, 2, 3, 4])),
+            "extra": in_type(rng.integers(0, 2, size=[1, 2, 3, 4])),
         }
         result = AsChannelLastd(**input_param)(test_data)
         self.assertTupleEqual(result["image"].shape, expected_shape)

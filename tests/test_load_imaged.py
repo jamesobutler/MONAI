@@ -49,7 +49,8 @@ class TestLoadImaged(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2])
     def test_shape(self, input_param, expected_shape):
-        test_image = nib.Nifti1Image(np.random.rand(128, 128, 128), np.eye(4))
+        rng = np.random.default_rng()
+        test_image = nib.Nifti1Image(rng.random(128, 128, 128), np.eye(4))
         test_data = {}
         with tempfile.TemporaryDirectory() as tempdir:
             for key in KEYS:
@@ -62,7 +63,8 @@ class TestLoadImaged(unittest.TestCase):
 
     def test_register(self):
         spatial_size = (32, 64, 128)
-        test_image = np.random.rand(*spatial_size)
+        rng = np.random.default_rng()
+        test_image = rng.random(*spatial_size)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.nii.gz")
             itk_np_view = itk.image_view_from_array(test_image)
@@ -75,7 +77,8 @@ class TestLoadImaged(unittest.TestCase):
 
     def test_channel_dim(self):
         spatial_size = (32, 64, 3, 128)
-        test_image = np.random.rand(*spatial_size)
+        rng = np.random.default_rng()
+        test_image = rng.random(*spatial_size)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.nii.gz")
             nib.save(nib.Nifti1Image(test_image, affine=np.eye(4)), filename)
@@ -143,8 +146,8 @@ class TestConsistency(unittest.TestCase):
 
     def test_png(self):
         """png reading with itk, saving to nifti, then load with itk or nibabel or PIL"""
-
-        test_image = np.random.randint(0, 256, size=(256, 224, 3)).astype("uint8")
+        rng = np.random.default_rng()
+        test_image = rng.integers(0, 256, size=(256, 224, 3)).astype("uint8")
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.png")
             itk_np_view = itk.image_view_from_array(test_image, is_vector=True)
@@ -162,7 +165,8 @@ class TestLoadImagedMeta(unittest.TestCase):
     def setUpClass(cls):
         super(__class__, cls).setUpClass()
         cls.tmpdir = tempfile.mkdtemp()
-        test_image = nib.Nifti1Image(np.random.rand(128, 128, 128), np.eye(4))
+        rng = np.random.default_rng()
+        test_image = nib.Nifti1Image(rng.random(128, 128, 128), np.eye(4))
         cls.test_data = {}
         for key in KEYS:
             nib.save(test_image, os.path.join(cls.tmpdir, key + ".nii.gz"))

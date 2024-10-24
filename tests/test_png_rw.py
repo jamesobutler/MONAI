@@ -26,7 +26,8 @@ class TestPngWrite(unittest.TestCase):
     def test_write_gray(self):
         with tempfile.TemporaryDirectory() as out_dir:
             image_name = os.path.join(out_dir, "test.png")
-            img = np.random.rand(2, 3)
+            rng = np.random.default_rng()
+            img = rng.random(2, 3)
             img_save_val = (255 * img).astype(np.uint8)
             writer_obj = PILWriter(output_dtype=np.uint8)
             writer_obj.set_data_array(img, channel_dim=None)
@@ -38,7 +39,8 @@ class TestPngWrite(unittest.TestCase):
     def test_write_gray_1height(self):
         with tempfile.TemporaryDirectory() as out_dir:
             image_name = os.path.join(out_dir, "test.png")
-            img = np.random.rand(1, 3)
+            rng = np.random.default_rng()
+            img = rng.random(1, 3)
             img_save_val = (65535 * img).astype(np.uint16)
             writer_obj = PILWriter(output_dtype=np.uint16, scale=65535)
             writer_obj.set_data_array(img, channel_dim=None)
@@ -50,7 +52,8 @@ class TestPngWrite(unittest.TestCase):
     def test_write_gray_1channel(self):
         with tempfile.TemporaryDirectory() as out_dir:
             image_name = os.path.join(out_dir, "test.png")
-            img = np.random.rand(2, 3, 1)
+            rng = np.random.default_rng()
+            img = rng.random(2, 3, 1)
             img_save_val = (255 * img).astype(np.uint8).squeeze(2)
             writer_obj = PILWriter(output_dtype=np.uint8, scale=255)
             writer_obj.set_data_array(img, channel_dim=None)
@@ -63,7 +66,8 @@ class TestPngWrite(unittest.TestCase):
         """testing default kwargs and obj_kwargs"""
         with tempfile.TemporaryDirectory() as out_dir:
             image_name = os.path.join(out_dir, "test.png")
-            img = np.random.rand(2, 3, 3)
+            rng = np.random.default_rng()
+            img = rng.random(2, 3, 3)
             img_save_val = (255 * img).astype(np.uint8)
             writer_obj = PILWriter(output_dtype=np.uint8)
             writer_obj.set_data_array(img, channel_dim=-1)
@@ -75,7 +79,8 @@ class TestPngWrite(unittest.TestCase):
     def test_write_2channels(self):
         with tempfile.TemporaryDirectory() as out_dir:
             image_name = os.path.join(out_dir, "test.png")
-            img = np.random.rand(2, 3, 2)
+            rng = np.random.default_rng()
+            img = rng.random(2, 3, 2)
             img_save_val = (255 * img).astype(np.uint8)
             writer_obj = PILWriter(output_dtype=np.uint8)
             writer_obj.set_data_array(img, channel_dim=-1)
@@ -87,7 +92,8 @@ class TestPngWrite(unittest.TestCase):
     def test_write_output_shape(self):
         with tempfile.TemporaryDirectory() as out_dir:
             image_name = os.path.join(out_dir, "test.png")
-            img = np.random.rand(2, 2, 3)
+            rng = np.random.default_rng()
+            img = rng.random(2, 2, 3)
             writer_obj = PILWriter(output_dtype=np.uint8)
             writer_obj.set_data_array(img, channel_dim=-1)
             writer_obj.set_metadata({"spatial_shape": (4, 4)}, scale=255)

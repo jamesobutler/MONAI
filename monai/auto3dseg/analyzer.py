@@ -187,8 +187,9 @@ class ImageStats(Analyzer):
         from monai.data import MetaTensor
 
         input = {}
-        input['image'] = np.random.rand(1,30,30,30)
-        input['image'] = MetaTensor(np.random.rand(1,30,30,30))  # MetaTensor
+        rng = np.random.default_rng()
+        input['image'] = rng.random(1,30,30,30)
+        input['image'] = MetaTensor(rng.random(1,30,30,30))  # MetaTensor
         analyzer = ImageStats(image_key="image")
         print(analyzer(input)["image_stats"])
 
@@ -289,7 +290,8 @@ class FgImageStats(Analyzer):
         from monai.auto3dseg import FgImageStats
 
         input = {}
-        input['image'] = np.random.rand(1,30,30,30)
+        rng = np.random.default_rng()
+        input['image'] = rng.random(1,30,30,30)
         input['label'] = np.ones([30,30,30])
         analyzer = FgImageStats(image_key='image', label_key='label')
         print(analyzer(input)["image_foreground_stats"])
@@ -371,7 +373,8 @@ class LabelStats(Analyzer):
         from monai.auto3dseg import LabelStats
 
         input = {}
-        input['image'] = np.random.rand(1,30,30,30)
+        rng = np.random.default_rng()
+        input['image'] = rng.random(1,30,30,30)
         input['label'] = np.ones([30,30,30])
         analyzer = LabelStats(image_key='image', label_key='label')
         print(analyzer(input)["label_stats"])
@@ -859,7 +862,8 @@ class ImageHistogram(Analyzer):
         from monai.auto3dseg.analyzer import ImageHistogram
 
         input = {}
-        input['image'] = np.random.rand(1,30,30,30)
+        rng = np.random.default_rng()
+        input['image'] = rng.random(1,30,30,30)
         input['label'] = np.ones([30,30,30])
         analyzer = ImageHistogram(image_key='image')
         print(analyzer(input))

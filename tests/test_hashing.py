@@ -23,11 +23,12 @@ class TestPickleHashing(unittest.TestCase):
 
     def test_pickle(self):
         set_determinism(0)
-        data1 = np.random.rand(10)
-        data2 = np.random.rand(10)
+        rng = np.random.default_rng()
+        data1 = rng.random(10)
+        data2 = rng.random(10)
         set_determinism(0)
-        data3 = np.random.rand(10)
-        data4 = np.random.rand(10)
+        data3 = rng.random(10)
+        data4 = rng.random(10)
         set_determinism(None)
 
         h1 = pickle_hashing(data1)

@@ -41,13 +41,15 @@ def create_semantic_data(shape: list, semantic_regions: int):
     out_label = torch.zeros(shape)
     out_image = torch.zeros(shape) + torch.randn(shape) * 0.01
     for i in range(1, semantic_regions):
-        shape_square = [i // np.random.choice(list(range(2, i // 2))) for i in shape]
-        start_point = [np.random.choice(list(range(shape[ind] - shape_square[ind]))) for ind, i in enumerate(shape)]
+        rng = np.random.default_rng()
+        shape_square = [i // rng.choice(list(range(2, i // 2))) for i in shape]
+        start_point = [rng.choice(list(range(shape[ind] - shape_square[ind]))) for ind, i in enumerate(shape)]
         if len(shape) == 2:
             out_label[
                 start_point[0] : (start_point[0] + shape_square[0]), start_point[1] : (start_point[1] + shape_square[1])
             ] = i
-            base_intensity = torch.ones(shape_square) * np.random.randn()
+            rng = np.random.default_rng()
+            base_intensity = torch.ones(shape_square) * rng.standard_normal()
             out_image[
                 start_point[0] : (start_point[0] + shape_square[0]), start_point[1] : (start_point[1] + shape_square[1])
             ] = (base_intensity + torch.randn(shape_square) * 0.1)
@@ -57,7 +59,8 @@ def create_semantic_data(shape: list, semantic_regions: int):
                 start_point[1] : (start_point[1] + shape_square[1]),
                 start_point[2] : (start_point[2] + shape_square[2]),
             ] = i
-            base_intensity = torch.ones(shape_square) * np.random.randn()
+            rng = np.random.default_rng()
+            base_intensity = torch.ones(shape_square) * rng.standard_normal()
             out_image[
                 start_point[0] : (start_point[0] + shape_square[0]),
                 start_point[1] : (start_point[1] + shape_square[1]),

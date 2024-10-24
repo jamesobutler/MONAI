@@ -28,10 +28,11 @@ class TestRandShiftIntensityd(NumpyImageTestCase2D):
             shifter = RandShiftIntensityd(keys=[key], offsets=1.0, prob=1.0)
             shifter.set_random_state(seed=0)
             result = shifter({key: p(self.imt)})
-            np.random.seed(0)
+            np.random.default_rng(0)
             # simulate the randomize() of transform
-            np.random.random()
-            expected = self.imt + np.random.uniform(low=-1.0, high=1.0)
+            rng = np.random.default_rng()
+            rng.random()
+            expected = self.imt + rng.uniform(low=-1.0, high=1.0)
             assert_allclose(result[key], p(expected), type_test="tensor")
 
     def test_factor(self):
@@ -41,10 +42,11 @@ class TestRandShiftIntensityd(NumpyImageTestCase2D):
         data = {key: self.imt, PostFix.meta(key): {"affine": None}}
         shifter.set_random_state(seed=0)
         result = shifter(stats(data))
-        np.random.seed(0)
+        np.random.default_rng(0)
         # simulate the randomize() of transform
-        np.random.random()
-        expected = self.imt + np.random.uniform(low=-1.0, high=1.0) * np.nanmax(self.imt)
+        rng = np.random.default_rng()
+        rng.random()
+        expected = self.imt + rng.uniform(low=-1.0, high=1.0) * np.nanmax(self.imt)
         np.testing.assert_allclose(result[key], expected)
 
     def test_channel_wise(self):
@@ -53,11 +55,12 @@ class TestRandShiftIntensityd(NumpyImageTestCase2D):
             scaler = RandShiftIntensityd(keys=[key], offsets=3.0, prob=1.0, channel_wise=True)
             scaler.set_random_state(seed=0)
             result = scaler({key: p(self.imt)})
-            np.random.seed(0)
+            np.random.default_rng(0)
             # simulate the randomize function of transform
-            np.random.random()
+            rng = np.random.default_rng()
+            rng.random()
             channel_num = self.imt.shape[0]
-            factor = [np.random.uniform(low=-3.0, high=3.0) for _ in range(channel_num)]
+            factor = [rng.uniform(low=-3.0, high=3.0) for _ in range(channel_num)]
             expected = p(
                 np.stack([np.asarray((self.imt[i]) + factor[i]) for i in range(channel_num)]).astype(np.float32)
             )

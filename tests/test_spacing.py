@@ -348,7 +348,8 @@ class TestSpacingCase(unittest.TestCase):
         )
         img = MetaTensor(img_t, affine=affine, meta={"fname": "somewhere"})
         choices = [(None, None), [1.2, None], [None, 0.7], [0.7, 0.9]]
-        idx = np.random.choice(range(len(choices)), size=1)[0]
+        rng = np.random.default_rng()
+        idx = rng.choice(range(len(choices)), size=1)[0]
         tr = Spacing(
             pixdim=[1.1, 1.2, 0.9],
             recompute_affine=recompute,

@@ -141,7 +141,8 @@ class TestDints(unittest.TestCase):
         # define archtecture codes
         node_a = torch.ones((num_blocks + 1, num_depths))
         arch_code_a = np.ones((num_blocks, 3 * num_depths - 2))
-        arch_code_c = np.random.randint(num_cell_ops, size=(num_blocks, 3 * num_depths - 2))
+        rng = np.random.default_rng()
+        arch_code_c = rng.integers(num_cell_ops, size=(num_blocks, 3 * num_depths - 2))
         # initialize with codes
         dints_grid_params["arch_code"] = [arch_code_a, arch_code_c]
         grid = TopologyInstance(**dints_grid_params)

@@ -36,10 +36,11 @@ class TestEnsureChannelFirstd(unittest.TestCase):
     @parameterized.expand([TEST_CASE_1, TEST_CASE_2, TEST_CASE_3])
     def test_load_nifti(self, input_param, filenames, original_channel_dim):
         # if original_channel_dim is None:
-        test_image = np.random.rand(8, 8, 8)
+        rng = np.random.default_rng()
+        test_image = rng.random(8, 8, 8)
 
         if original_channel_dim == -1:
-            test_image = np.random.rand(8, 8, 8, 1)
+            test_image = rng.random(8, 8, 8, 1)
 
         with tempfile.TemporaryDirectory() as tempdir:
             for i, name in enumerate(filenames):
@@ -51,7 +52,8 @@ class TestEnsureChannelFirstd(unittest.TestCase):
 
     def test_load_png(self):
         spatial_size = (6, 6, 3)
-        test_image = np.random.randint(0, 256, size=spatial_size)
+        rng = np.random.default_rng()
+        test_image = rng.integers(0, 256, size=spatial_size)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.png")
             Image.fromarray(test_image.astype("uint8")).save(filename)

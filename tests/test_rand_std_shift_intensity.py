@@ -25,10 +25,11 @@ class TestRandStdShiftIntensity(NumpyImageTestCase2D):
 
     @parameterized.expand([[p] for p in TEST_NDARRAYS])
     def test_value(self, p):
-        np.random.seed(0)
+        np.random.default_rng(0)
         # simulate the randomize() of transform
-        np.random.random()
-        factor = np.random.uniform(low=-1.0, high=1.0)
+        rng = np.random.default_rng()
+        rng.random()
+        factor = rng.uniform(low=-1.0, high=1.0)
         offset = factor * np.std(self.imt)
         expected = p(self.imt + offset)
         shifter = RandStdShiftIntensity(factors=1.0, prob=1.0)

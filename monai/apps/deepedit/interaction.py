@@ -62,7 +62,8 @@ class Interaction:
         if batchdata is None:
             raise ValueError("Must provide batch data for current iteration.")
 
-        if np.random.choice([True, False], p=[self.deepgrow_probability, 1 - self.deepgrow_probability]):
+        rng = np.random.default_rng()
+        if rng.choice([True, False], p=[self.deepgrow_probability, 1 - self.deepgrow_probability]):
             for j in range(self.max_interactions):
                 inputs, _ = engine.prepare_batch(batchdata)
                 inputs = inputs.to(engine.state.device)

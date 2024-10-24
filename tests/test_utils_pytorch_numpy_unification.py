@@ -42,7 +42,8 @@ class TestPytorchNumpyUnification(unittest.TestCase):
 
     def test_percentile(self):
         for size in (1, 100):
-            q = np.random.randint(0, 100, size=size)
+            rng = np.random.default_rng()
+            q = rng.integers(0, 100, size=size)
             results = []
             for idx, p in enumerate(TEST_NDARRAYS):
                 dtype = [np.float32, float][idx % 2]
@@ -55,7 +56,8 @@ class TestPytorchNumpyUnification(unittest.TestCase):
         for p in TEST_NDARRAYS:
             for elements in (1000, 17_000_000):
                 for t in [*TEST_NDARRAYS, list]:
-                    x = p(np.random.randn(elements))
+                    rng = np.random.default_rng()
+                    x = p(rng.standard_normal(elements))
                     q = percentile(x, t([10, 50]))
                     if isinstance(x, torch.Tensor):
                         self.assertIsInstance(q, torch.Tensor)
@@ -69,7 +71,8 @@ class TestPytorchNumpyUnification(unittest.TestCase):
                     percentile(arr, q)
 
     def test_dim(self):
-        q = np.random.randint(0, 100, size=50)
+        rng = np.random.default_rng()
+        q = rng.integers(0, 100, size=50)
         results = []
         for p in TEST_NDARRAYS:
             arr = p(np.arange(6).reshape(1, 2, 3).astype(np.float32))

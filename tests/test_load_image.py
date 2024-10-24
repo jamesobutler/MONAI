@@ -184,7 +184,8 @@ class TestLoadImage(unittest.TestCase):
         [TEST_CASE_1, TEST_CASE_2, TEST_CASE_3, TEST_CASE_3_1, TEST_CASE_4, TEST_CASE_4_1, TEST_CASE_5]
     )
     def test_nibabel_reader(self, input_param, filenames, expected_shape):
-        test_image = np.random.rand(128, 128, 128)
+        rng = np.random.default_rng()
+        test_image = rng.random(128, 128, 128)
         with tempfile.TemporaryDirectory() as tempdir:
             for i, name in enumerate(filenames):
                 filenames[i] = os.path.join(tempdir, name)
@@ -198,7 +199,8 @@ class TestLoadImage(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_6, TEST_CASE_7, TEST_CASE_8, TEST_CASE_8_1, TEST_CASE_9])
     def test_itk_reader(self, input_param, filenames, expected_shape):
-        test_image = np.random.rand(128, 128, 128)
+        rng = np.random.default_rng()
+        test_image = rng.random(128, 128, 128)
         with tempfile.TemporaryDirectory() as tempdir:
             for i, name in enumerate(filenames):
                 filenames[i] = os.path.join(tempdir, name)
@@ -249,7 +251,8 @@ class TestLoadImage(unittest.TestCase):
         self.assertTupleEqual(result.shape, (16, 16, 1))
 
     def test_itk_reader_multichannel(self):
-        test_image = np.random.randint(0, 256, size=(256, 224, 3)).astype("uint8")
+        rng = np.random.default_rng()
+        test_image = rng.integers(0, 256, size=(256, 224, 3)).astype("uint8")
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.png")
             itk_np_view = itk.image_view_from_array(test_image, is_vector=True)
@@ -285,7 +288,8 @@ class TestLoadImage(unittest.TestCase):
             np.testing.assert_allclose(pydicom_result.affine, itk_result.affine)
 
     def test_load_nifti_multichannel(self):
-        test_image = np.random.randint(0, 256, size=(31, 64, 16, 2)).astype(np.float32)
+        rng = np.random.default_rng()
+        test_image = rng.integers(0, 256, size=(31, 64, 16, 2)).astype(np.float32)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.nii.gz")
             itk_np_view = itk.image_view_from_array(test_image, is_vector=True)
@@ -301,7 +305,8 @@ class TestLoadImage(unittest.TestCase):
 
     def test_load_png(self):
         spatial_size = (256, 224)
-        test_image = np.random.randint(0, 256, size=spatial_size)
+        rng = np.random.default_rng()
+        test_image = rng.integers(0, 256, size=spatial_size)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.png")
             Image.fromarray(test_image.astype("uint8")).save(filename)
@@ -311,7 +316,8 @@ class TestLoadImage(unittest.TestCase):
 
     def test_register(self):
         spatial_size = (32, 64, 128)
-        test_image = np.random.rand(*spatial_size)
+        rng = np.random.default_rng()
+        test_image = rng.random(*spatial_size)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.nii.gz")
             itk_np_view = itk.image_view_from_array(test_image)
@@ -324,7 +330,8 @@ class TestLoadImage(unittest.TestCase):
 
     def test_kwargs(self):
         spatial_size = (32, 64, 128)
-        test_image = np.random.rand(*spatial_size)
+        rng = np.random.default_rng()
+        test_image = rng.random(*spatial_size)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, "test_image.nii.gz")
             itk_np_view = itk.image_view_from_array(test_image)
@@ -366,7 +373,8 @@ class TestLoadImage(unittest.TestCase):
 
     @parameterized.expand([TEST_CASE_13, TEST_CASE_14, TEST_CASE_15, TEST_CASE_16, TEST_CASE_17, TEST_CASE_18])
     def test_channel_dim(self, input_param, filename, expected_shape):
-        test_image = np.random.rand(*expected_shape)
+        rng = np.random.default_rng()
+        test_image = rng.random(*expected_shape)
         with tempfile.TemporaryDirectory() as tempdir:
             filename = os.path.join(tempdir, filename)
             nib.save(nib.Nifti1Image(test_image, np.eye(4)), filename)
@@ -385,7 +393,8 @@ class TestLoadImageMeta(unittest.TestCase):
     def setUpClass(cls):
         super(__class__, cls).setUpClass()
         cls.tmpdir = tempfile.mkdtemp()
-        test_image = nib.Nifti1Image(np.random.rand(128, 128, 128), np.eye(4))
+        rng = np.random.default_rng()
+        test_image = nib.Nifti1Image(rng.random(128, 128, 128), np.eye(4))
         nib.save(test_image, os.path.join(cls.tmpdir, "im.nii.gz"))
         cls.test_data = os.path.join(cls.tmpdir, "im.nii.gz")
 

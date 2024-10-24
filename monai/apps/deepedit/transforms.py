@@ -58,7 +58,8 @@ class DiscardAddGuidanced(MapTransform):
         self.label_names = label_names or []
 
     def _apply(self, image):
-        if self.discard_probability >= 1.0 or np.random.choice(
+        rng = np.random.default_rng()
+        if self.discard_probability >= 1.0 or rng.choice(
             [True, False], p=[self.discard_probability, 1 - self.discard_probability]
         ):
             signal = np.zeros(
@@ -159,7 +160,8 @@ class SingleLabelSelectiond(MapTransform):
         for key in self.key_iterator(d):
             if key == "label":
                 # Taking one label at a time
-                t_label = np.random.choice(self.label_names)
+                rng = np.random.default_rng()
+                t_label = rng.choice(self.label_names)
                 d["current_label"] = t_label
                 d[key][d[key] != self.all_label_values[t_label]] = 0.0
                 # Convert label to index values following label_names argument

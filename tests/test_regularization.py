@@ -29,11 +29,12 @@ class TestMixup(unittest.TestCase):
             mixup = MixUp(6, 1.0)
             mixup.set_random_state(seed=0)
             output = mixup(sample)
-            np.random.seed(0)
+            np.random.default_rng(0)
             # simulate the randomize() of transform
-            np.random.random()
-            weight = torch.from_numpy(np.random.beta(1.0, 1.0, 6)).type(torch.float32)
-            perm = np.random.permutation(6)
+            rng = np.random.default_rng()
+            rng.random()
+            weight = torch.from_numpy(rng.beta(1.0, 1.0, 6)).type(torch.float32)
+            perm = rng.permutation(6)
             self.assertEqual(output.shape, sample.shape)
             mixweight = weight[(Ellipsis,) + (None,) * (dims + 1)]
             expected = mixweight * sample + (1 - mixweight) * sample[perm, ...]
@@ -57,11 +58,12 @@ class TestMixup(unittest.TestCase):
             mixup = MixUpd(["a", "b"], 6)
             mixup.set_random_state(seed=0)
             output = mixup(sample)
-            np.random.seed(0)
+            np.random.default_rng(0)
             # simulate the randomize() of transform
-            np.random.random()
-            weight = torch.from_numpy(np.random.beta(1.0, 1.0, 6)).type(torch.float32)
-            perm = np.random.permutation(6)
+            rng = np.random.default_rng()
+            rng.random()
+            weight = torch.from_numpy(rng.beta(1.0, 1.0, 6)).type(torch.float32)
+            perm = rng.permutation(6)
             self.assertEqual(output["a"].shape, sample["a"].shape)
             mixweight = weight[(Ellipsis,) + (None,) * (dims + 1)]
             expected = mixweight * sample["a"] + (1 - mixweight) * sample["a"][perm, ...]
@@ -107,12 +109,14 @@ class TestCutOut(unittest.TestCase):
             cutout = CutOut(6, 1.0)
             cutout.set_random_state(seed=123)
             output = cutout(sample)
-            np.random.seed(123)
+            np.random.default_rng(123)
             # simulate the randomize() of transform
-            np.random.random()
-            weight = torch.from_numpy(np.random.beta(1.0, 1.0, 6)).type(torch.float32)
-            perm = np.random.permutation(6)
-            coords = [torch.from_numpy(np.random.randint(0, d, size=(1,))) for d in sample.shape[2:]]
+            rng = np.random.default_rng()
+            rng.random()
+            weight = torch.from_numpy(rng.beta(1.0, 1.0, 6)).type(torch.float32)
+            perm = rng.permutation(6)
+            rng = np.random.default_rng()
+            coords = [torch.from_numpy(rng.integers(0, d, size=(1,))) for d in sample.shape[2:]]
             assert_allclose(weight, cutout._params[0])
             assert_allclose(perm, cutout._params[1])
             self.assertSequenceEqual(coords, cutout._params[2])
@@ -126,12 +130,14 @@ class TestCutOut(unittest.TestCase):
             cutout = CutOutd(["a", "b"], 6, 1.0)
             cutout.set_random_state(seed=123)
             output = cutout(sample)
-            np.random.seed(123)
+            np.random.default_rng(123)
             # simulate the randomize() of transform
-            np.random.random()
-            weight = torch.from_numpy(np.random.beta(1.0, 1.0, 6)).type(torch.float32)
-            perm = np.random.permutation(6)
-            coords = [torch.from_numpy(np.random.randint(0, d, size=(1,))) for d in t.shape[2:]]
+            rng = np.random.default_rng()
+            rng.random()
+            weight = torch.from_numpy(rng.beta(1.0, 1.0, 6)).type(torch.float32)
+            perm = rng.permutation(6)
+            rng = np.random.default_rng()
+            coords = [torch.from_numpy(rng.integers(0, d, size=(1,))) for d in t.shape[2:]]
             assert_allclose(weight, cutout.cutout._params[0])
             assert_allclose(perm, cutout.cutout._params[1])
             self.assertSequenceEqual(coords, cutout.cutout._params[2])

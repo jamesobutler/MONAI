@@ -28,11 +28,12 @@ TESTS = []
 
 np.random.RandomState(123)
 
+rng = np.random.default_rng()
 for p in TEST_NDARRAYS:
-    EXCEPTION_TESTS.append([{}, p(np.random.rand(2, 5, 5)), p(np.random.rand(1, 5, 5)), ValueError])
-    EXCEPTION_TESTS.append([{}, p(np.random.rand(1, 5, 5)), p(np.random.rand(2, 5, 5)), ValueError])
+    EXCEPTION_TESTS.append([{}, p(rng.random(2, 5, 5)), p(rng.random(1, 5, 5)), ValueError])
+    EXCEPTION_TESTS.append([{}, p(rng.random(1, 5, 5)), p(rng.random(2, 5, 5)), ValueError])
 
-    TESTS.append([{}, p(np.random.rand(1, 5, 5)), p(np.random.rand(1, 5, 5)), (1, 5, 5)])
+    TESTS.append([{}, p(rng.random(1, 5, 5)), p(rng.random(1, 5, 5)), (1, 5, 5)])
 
 
 @unittest.skipUnless(has_skimage, "Requires scikit-image library.")

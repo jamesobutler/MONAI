@@ -96,7 +96,8 @@ class TestRandZoom(NumpyImageTestCase2D):
         for p in TEST_NDARRAYS_ALL:
             random_zoom = RandZoom(prob=1.0, min_zoom=[0.8, 0.7], max_zoom=[1.2, 1.3], mode="nearest", keep_size=False)
             random_zoom.set_random_state(1234)
-            test_data = p(np.random.randint(0, 2, size=[2, 2, 3, 4]))
+            rng = np.random.default_rng()
+            test_data = p(rng.integers(0, 2, size=[2, 2, 3, 4]))
             zoomed = random_zoom(test_data)
             assert_allclose(random_zoom._zoom, (1.048844, 1.048844, 0.962637), atol=1e-2, type_test=False)
             assert_allclose(zoomed.shape, (2, 2, 3, 3), type_test=False)

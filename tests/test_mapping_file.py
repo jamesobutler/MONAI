@@ -28,7 +28,8 @@ nib, has_nib = optional_import("nibabel")
 
 
 def create_input_file(temp_dir, name):
-    test_image = np.random.rand(128, 128, 128)
+    rng = np.random.default_rng()
+    test_image = rng.random(128, 128, 128)
     output_ext = ".nii.gz"
     input_file = os.path.join(temp_dir, name + output_ext)
     nib.save(nib.Nifti1Image(test_image, np.eye(4)), input_file)

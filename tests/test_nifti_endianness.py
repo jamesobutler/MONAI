@@ -95,7 +95,8 @@ class TestNiftiEndianness(unittest.TestCase):
     @skipUnless(has_pil, "Requires PIL")
     def test_pil(self):
         tempdir = tempfile.mkdtemp()
-        test_image = np.random.randint(0, 256, size=[128, 256])
+        rng = np.random.default_rng()
+        test_image = rng.integers(0, 256, size=[128, 256])
         filename = os.path.join(tempdir, "test_image.png")
         PILImage.fromarray(test_image.astype("uint8")).save(filename)
 
