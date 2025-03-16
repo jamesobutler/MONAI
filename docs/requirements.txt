@@ -18,7 +18,7 @@ sphinxcontrib-htmlhelp
 sphinxcontrib-jsmath
 sphinxcontrib-qthelp
 sphinxcontrib-serializinghtml
-sphinx-autodoc-typehints==1.11.1
+sphinx-autodoc-typehints==3.0.0
 pandas
 einops
 transformers>=4.36.0, <4.41.0; python_version <= '3.10'
